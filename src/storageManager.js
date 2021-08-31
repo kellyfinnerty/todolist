@@ -1,49 +1,115 @@
 import Task from './task.js'
 import Project from './project.js'
-import BoardCoordinator from './boardCoordinator.js'
+import Board from './boardCoordinator.js'
 
-export default class Storage {
-    constructor (){
-        localStorage.setItem(new BoardCoordinator()); // create and store empty board
-        this.boardName = "board";
-    }
+var storage = (function () {
 
-    #getBoard(){
-        var board = JSON.parse(localStorage.getItem(this.boardName));
-        board = Object.assign(new BoardCoordinator(), board);
+    // create and store empty board
+    var _boardName = "board";
+    localStorage.setItem(_boardName, JSON.stringify(new Board())); 
+
+    function _getBoard(){
+        var board = Object.assign(
+            new Board(),
+            JSON.parse(localStorage.getItem(_boardName))
+        );
+
+        board.setProjects(
+            board.getProjects()
+                 .map(project => Object.assign(new Project(), project))
+        );
+
+        //board.setProjects([]);
+        var b = board.getProjects();
+
+        board.getProjects().forEach(project => {
+            project.setTaskList(
+                project.getTaskList().map(task => Object.assign(new Task(), task))
+            );
+        });
 
         return board
     }
 
-    #storeBoard(board){
-        localStorage.setItem(this.boardName, JSON.stringify(board));
+    function _storeBoard(board){
+        localStorage.setItem(_boardName, JSON.stringify(board));
     }
 
-    storeProject(project){
-        var board = getBoard();
+    function storeProject(project){
+        var board = _getBoard();
         board.addProject(project);
-        storeBoard(board);
+        _storeBoard(board);
     }
 
-    getStoredProject(projectTitle){
-        //converts generic object to a Project object again
-        var board = getBoard();
-        return this.getBoard().getProject(projectTitle);
+    function getStoredProject(projectTitle){
+        return _getBoard().getProject(projectTitle)
     }
-}
+
+    function removeStoredProject(projectTitle){
+        var board = _getBoard();
+        board.removeProject(projectTitle);
+        _storeBoard(board);
+    }
+
+    function renameStoredProject(oldProjectTitle, newProjectTitle){
+        var board = _getBoard();
+        board.renameProject(oldProjectTitle, newProjectTitle);
+        _storeBoard(board);
+    }
+
+    function storeTask(projectName, task){
+        var board = _getBoard();
+        board.addTask(projectName, task);
+        _storeBoard(board);
+    }
+
+    function removeTask(projectName, taskName){
+        var board = _getBoard();
+        board.removeTask(projectName, taskName);
+        _storeBoard(board);
+    }
+
+    function getTask(projectName, taskName){
+        return _getBoard().getTask(projectName, taskName);
+    }
+
+    return { 
+        storeProject, 
+        getStoredProject, 
+        removeStoredProject, 
+        renameStoredProject, 
+        storeTask,
+        removeTask,
+        getTask
+    }
+})();
+
+
+export default storage;
 
 
 
+    /*function _getBoard(){
+        var board = Object.assign(
+                            new BoardCoordinator, 
+                            JSON.parse(localStorage.getItem(_boardName)));
 
+        board.projects = board.project.map(proj => {
+            proj = Object.assign(new Project, JSON.stringify(proj));
+            proj.taskList = proj.taskList.map(task => {
+                Object.assign(new Task, JSON.stringify(task));
+            });
+            return proj
+        });
 
+        return board
+    }
 
-
-function test(){
-    var testProj = new Project("Kelly's Birthday");
-
-    var testProj_serialized = JSON.stringify(testProj);
-    
-    localStorage.setItem(testProj.title, testProj_serialized);
-    
-    var testProj_deserialized = JSON.parse(localStorage.getItem(testProj.title));
-}
+    function _storeBoard(board){
+        var boardJSON = board.projects.map(proj => {
+            proj.taskList = proj.taskList.map(task => JSON.stringify(task));
+            return JSON.stringify(proj)
+        })
+        boardJSON = JSON.stringify(boardJSON);
+        localStorage.setItem(_boardName, boardJSON);
+    }*/

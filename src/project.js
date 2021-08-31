@@ -1,32 +1,37 @@
-
-import ToDo from './todo.js'
-
-class Project {
+export default class Project {
 
     constructor(title){
         this._title = title;
-        this._toDoList = [];
+        this._taskList = [];
     }
 
-    get title(){
+    getTitle(){
         return this._title;
     }
-    set title(value){
-        //check length
-
+    renameProject(value){
         this._title = value;
     }
 
-    get toDoList(){
-        return this._toDoList;
+    getTaskList(){
+        return this._taskList;
     }
-    set toDoList(value){
-        if (typeof value !== 'ToDo'){
-            //return error
-        }
-        this._toDoList.push(value);
+    setTaskList(value){
+        this._taskList = value;
     }
+
+    addTask(task){
+        this._taskList.push(task);
+    }
+
+    getTask(taskTitle){
+        return this._taskList.find(task => task.getTitle() === taskTitle)
+    }
+
+    removeTask(taskTitle){
+        var index = this._taskList.findIndex(task => task.getTitle === taskTitle);
+        this._taskList.splice(index, 1);
+    }
+
+
 
 }
-
-export default Project

@@ -1,5 +1,5 @@
 
-class ToDo{
+export default class Task{
 
     constructor(title, desc, dueDate, priority, notes){
         this._title = title;
@@ -14,10 +14,10 @@ class ToDo{
         this._minDesc = 1;
     }
 
-    get title(){
+    getTitle(){
         return this._title
     }
-    set title(value){
+    setTitle(value){
         if (value.length > this._maxTitle || value.length < this._minTitle){
             throw new Error(`Invalid title length ${value.length}/${this._maxTitle}`)
         }
@@ -58,5 +58,3 @@ class ToDo{
         this._notes = value;
     }
 }
-
-export default ToDo
