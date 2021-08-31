@@ -4,6 +4,32 @@
     <meta charset="utf-8">
     <title>Development</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"><script defer src="main.bundle.js"></script></head>
-  <body>
+  <body class="site-container">
+    <header>
+      <h1 class="logo">My To Dos</h1>
+    </header>
+
+    <main class="display-container">
+      <div id="project-area">
+        <h2>Projects</h2>
+        <div id="project-list"></div>
+        <button id="open-project-form" class="add">+</button>
+        <div id="project-form" class="hidden">
+          <input id="project-title" type="text">
+          <button id="add-project">Add</button>
+          <button id="cancel-add-project">Cancel</button>
+        </div>
+      </div>
+
+      <div id="task-area">
+        <h2 id="curr-project-title">My Tasks</h2>
+        <button id="add-task" class="add">+</button>
+        <div id="task-list"></div>
+      </div>
+    </main>
+
+    <footer>
+
+    </footer>
   </body>
 </html>
