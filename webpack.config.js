@@ -8,9 +8,9 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     plugins: [
-      new HTMLWebpackPlugin({
+      /*new HTMLWebpackPlugin({
         title: 'Development',
-      }),
+      }),*/
     ],
     output : {
         filename: '[name].bundle.js',

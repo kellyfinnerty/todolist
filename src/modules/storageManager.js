@@ -6,9 +6,13 @@ var storage = (function () {
 
     // create and store empty board
     var _boardName = "board";
-    localStorage.setItem(_boardName, JSON.stringify(new Board())); 
+    
 
     function _getBoard(){
+        if(localStorage.getItem(_boardName) === null){
+            localStorage.setItem(_boardName, JSON.stringify(new Board())); 
+        }
+
         var board = Object.assign(
             new Board(),
             JSON.parse(localStorage.getItem(_boardName))
@@ -33,6 +37,10 @@ var storage = (function () {
 
     function _storeBoard(board){
         localStorage.setItem(_boardName, JSON.stringify(board));
+    }
+
+    function getAllStoredProjects(){
+        return _getBoard().getProjects();
     }
 
     function storeProject(project){
@@ -80,7 +88,8 @@ var storage = (function () {
         renameStoredProject, 
         storeTask,
         removeTask,
-        getTask
+        getTask,
+        getAllStoredProjects
     }
 })();
 

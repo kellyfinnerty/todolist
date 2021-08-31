@@ -1,0 +1,28 @@
+body{
+    margin: 0;
+}
+
+.class-container{
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+
+}
+
+.display-container{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.add{
+    background-color: bisque;
+    border: none;
+}
+
+.add:hover{
+    background-color: black;
+    color: white;
+}
+
+.hidden{
+    display: none;
+}

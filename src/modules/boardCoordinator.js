@@ -1,7 +1,3 @@
-import { createProjectHTML, createTaskHTML } from './displayController.js'
-import Project from './project.js'
-import storage from './storageManager.js'
-
 export default class BoardCoordinator {
 
     constructor (){
@@ -16,10 +12,8 @@ export default class BoardCoordinator {
         this._projects = projs;
     }
 
-    addProject(projTitle){
-        // create project add to board
-        var proj = new Project(projTitle);
-        this._projects.push(proj);
+    addProject(project){
+        this._projects.push(project);
     }
 
     removeProject(title){
