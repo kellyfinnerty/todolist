@@ -3,70 +3,96 @@ import Project from './project.js'
 import Storage from './storageManager.js'
 import '../css/style.css';
 
-export default class UserInterface {
-
-    #MAX_TITLE_LENGTH = 500;
+export default class UI {
 
     loadHomePage(){
-        this.#initializeProjects();
+        UI.loadProjects();
     }
 
-    #initializeProjects(){
-        this.#addProjectCreationEventListener();
-        this.#displayAllProjects();
+    static loadProjects(){
+        this.displayAllProjects();
+        this.initProjectButtons();
+        this.initNewProjectButtons();
     }
 
+    static initNewProjectButtons(){
+        var openNewProjButton = document.querySelector("#open-project-form");
+        var cancelNewProjectButton = document.querySelector("#cancel-add-project");  
+        var addNewProjectButton = document.querySelector("#add-project");
+                    
 
-    #addProjectCreationEventListener(){
-        document.querySelector("#open-project-form")
-                    .addEventListener("click", this.#toggleProjectForm);
-        document.querySelector("#cancel-add-project")
-                    .addEventListener("click", this.#toggleProjectForm);
-        document.querySelector("#add-project")
-                    .addEventListener("click", () => { this.#createProject() } )
+        openNewProjButton.addEventListener("click", this.toggleProjectForm);
+        cancelNewProjectButton.addEventListener("click", this.toggleProjectForm);
+        addNewProjectButton.addEventListener("click", () => { UI.createProject() } );
     }
 
-    #toggleProjectForm(){
+    static toggleProjectForm(){
         document.querySelector("#open-project-form").classList.toggle("hidden");
         document.querySelector("#project-form").classList.toggle("hidden");
     }
 
 
 
-    #displayAllProjects(){
-        var projects = Storage.getAllStoredProjects();
-        projects.forEach((project) => { this.#displayProject(project) });
+    static displayAllProjects(){
+        Storage.getAllStoredProjects()
+            .forEach((project) => { 
+                this.displayProject(project);
+            });
     }
 
-    #deleteProject(event){
-        var title = event.target.id.substr(7);
+    static deleteProject(event){
+        var projectDiv = event.target.parentElement;
+        var title = event.target.previousElementSibling.textContent;
 
-        //remove HTML
-        document.querySelector(`#${title}`).remove();
+        if (projectDiv.classList.contains("active")) {  }//delete the tasks 
+        
+        projectDiv.remove();    //remove project Div
+
         //remove from storage
         Storage.removeStoredProject(title);
     }
 
-    #displayProject(project){
+    static displayProject(project){
         var projTitle = project.getTitle();
 
         var projDiv = document.createElement("div");
         projDiv.id = projTitle;
         projDiv.classList.add("project");
-
-        projDiv.innerHTML = `
-            <h3 id="${projTitle}-header" class="proj-title">${projTitle}</h3>
-            <button id="delete-${projTitle}" class="delete">x</button>
-        `;
-
         document.querySelector("#project-list").appendChild(projDiv);
 
-        var deleteButton = document.querySelector(`#delete-${projTitle}`);
-        deleteButton.addEventListener("click", (event) => { this.#deleteProject(event) });
+        var titleHTML = document.createElement("h3");
+        titleHTML.classList.add("project-title");
+        titleHTML.textContent = projTitle;
+        
+        projDiv.appendChild(titleHTML);
+
+        var deleteHTML = document.createElement("button");
+        deleteHTML.classList.add("delete-project");
+        deleteHTML.textContent = "x";
+        deleteHTML.addEventListener("click", (event) => { this.deleteProject(event) });
+        projDiv.appendChild(deleteHTML);
     }
 
-    checkProjectUserInput(title){
-        if (title.length > this.#MAX_TITLE_LENGTH){
+    static initProjectButtons(){
+        var projects = Array.from(document.querySelectorAll(".project-title"));
+        var deleteProjects = Array.from(document.querySelectorAll(".delete-project"));
+
+        projects.forEach(project => UI.projectSelector);
+
+        //titleHTML.addEventListener("click", (event) => { this.projectSelector(event) });
+        
+    }
+
+    static projectSelector(event){
+        var title = event.target.textContent;
+        //update task title
+        document.querySelector("#curr-project-title").textContent = title + " Tasks";
+    }
+
+    static checkProjectUserInput(title){
+        var maxTitleLength = 500;
+
+        if (title.length > maxTitleLength){
             throw Error ("Project title exceeded 500 characters");
         } else if (title.length < 1) {
             throw Error ("Project title too short");
@@ -79,7 +105,7 @@ export default class UserInterface {
     }
 
     // event listener method
-    #createProject(){
+    static createProject(){
         var title = document.querySelector("#project-title").value;
         
         // do nothing if title is empty string
@@ -93,10 +119,11 @@ export default class UserInterface {
 
         var proj = new Project(title);
         Storage.storeProject(proj);
-        this.#displayProject(proj);
+        this.displayProject(proj);
 
         document.querySelector("#project-title").value = "";
-
     }
+
+
 
 }
