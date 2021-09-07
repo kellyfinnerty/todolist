@@ -5,26 +5,41 @@
     <title>Development</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"><script defer src="main.bundle.js"></script></head>
   <body class="site-container">
-    <header>
+    <header id="header">
       <h1 class="logo">My To Dos</h1>
     </header>
 
     <main class="display-container">
       <div id="project-area">
-        <h2>Projects</h2>
+        <h2 id="home" class="project-category">Home</h2>
+        <h2 id="today" class="project-category">Today</h2>
+        <h2 id="week" class="project-category">Week</h2>
+        <br>
+        <h2 class="project-category">Projects</h2>
         <div id="project-list"></div>
-        <button id="open-project-form" class="add">+</button>
-        <div id="project-form" class="hidden">
+        <button id="open-project-form" class="add">&plus; Create Project</button>
+        <div id="project-form" class="project-form-container hidden">
           <input id="project-title" type="text">
           <button id="add-project">Add</button>
           <button id="cancel-add-project">Cancel</button>
         </div>
       </div>
 
-      <div id="task-area">
+      <div id="task-area" class="hidden">
         <h2 id="curr-project-title">My Tasks</h2>
-        <button id="add-task" class="add">+</button>
         <div id="task-list"></div>
+        <button id="open-task-form" class="add">&plus; Add Task</button>
+        <div id="task-modal" class="modal hidden">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add a task</h2>
+            <input id="task-title" type="text">
+            <button id="add-task">Create Task</button>
+          </div>
+        </div>
+      </div>
+      <div id="welcome">
+        <h2>Welcome!</h2>
       </div>
     </main>
 
