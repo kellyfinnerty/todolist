@@ -1,23 +1,38 @@
+:root{
+    --dark-green: #002500;
+    --russian-green: #6A8D73;
+    --blanched-almond: #f0efeb;
+    --mydarkpurple: #5D576B;
+    --my-purple: #807891;
+}
+
 body{
     margin: 0;
     font-family: Arial, sans-serif;
+    
+}
+
+.site-container{
+    display: grid;
+    grid-template-rows: 11.3vh 88.7vh;
 }
 
 .class-container{
     display: grid;
     grid-template-rows: repeat(3, auto);
-
 }
 
-.header{
+#header{
     align-self: center;
-    justify-self: center;
-    text-align: center;
+    background-color: var(--my-purple);
+    color: white;
+    padding: 5px;
+    padding-left: 20px;
 }
 
 .display-container{
     display: grid;
-    grid-template-columns: 15rem auto;
+    grid-template-columns: 16rem auto;
     gap: 4%;
 }
 
@@ -26,10 +41,6 @@ body{
     background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
     border: none;
     color: white;
-}
-
-.add{
-    
 }
 
 .add:hover{
@@ -42,9 +53,14 @@ body{
     display: none;
 }
 
-.active{
+.active, .project:hover{
     background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
     color: white;
+    width: 100%;
+}
+
+.project:hover .delete-project{
+    display: block;
 }
 
 button{
@@ -58,15 +74,20 @@ button{
 .project{
     border-radius: 10px;
     align-content: center;
+    margin-left: 1rem;
 
     display: grid;
-    grid-template-columns: 12rem 2rem;
+    grid-template-columns: 11.5rem 2rem;
     grid-gap: 0.5em;
 
 }
 
+#project-area{
+    background-color: var(--blanched-almond);
+}
+
 .project-title{
-    padding-left: 1.7em;
+    padding-left: 1.2em;
 
     word-wrap: normal;
     font-size: 0.95rem;
@@ -77,15 +98,33 @@ button{
     margin-left: 1.1em;
 }
 
-.delete-project, .delete-task, .edit-task{
+.delete-task, .edit-task{
     align-self: center;
     justify-self: center;
     height: 1.8rem;
 }
 
-.delete-project:hover, .delete-task:hover{
+.delete-task:hover{
     background-color: rgb(230, 230, 230);
     color: white;
+    border: none;
+}
+
+.delete-project{
+    display: none;
+    align-self: center;
+    justify-self: left;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+.delete-project:hover{
+    background-color: white;
+    color: rgba(252,176,69,1);
     border: none;
 }
 
@@ -128,8 +167,8 @@ button{
 
 
 #open-project-form, #open-task-form{
-    margin-left: 1.4rem;
-    margin-top: 0.6rem;
+    margin-left: 3.5rem;
+    margin-top: 2rem;
     justify-self: center;
     align-self: center;
     grid-row-start: 1;
@@ -153,18 +192,17 @@ button{
 
     display: grid;
     grid-template-columns: 60% 15% 8% 6%;
+    margin-right: 10%;
 }
 
 #project-list{
     overflow-y: scroll;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
+    padding-right: 17px;
     max-height: 50vh;
     max-width: 700px;
-}
-
-.task-title{
-    padding-left: 10px;
 }
 
 #open-task-form{
@@ -210,4 +248,17 @@ button{
     color: #000;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  #curr-project-title{
+      margin-top: 50px;
+      margin-bottom: 20px;
+  }
+
+  .task-details, .task-title{
+      margin-left: 15px;
+  }
+
+  .due-date{
+      align-self: center;
   }

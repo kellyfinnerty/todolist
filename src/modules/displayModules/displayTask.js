@@ -5,6 +5,7 @@ import '../../css/style.css'
 import Storage from '../storageManager.js'
 
 export default class DisplayTask {
+    // eslint-disable-next-line class-methods-use-this
     createTaskBoard(project) {
         DisplayTask.clearTaskBoard()
 
@@ -14,7 +15,7 @@ export default class DisplayTask {
         const projectTitle = project.firstChild.textContent
         document.getElementById(
             'curr-project-title'
-        ).textContent = `${projectTitle} Tasks`
+        ).textContent = `${projectTitle}`
 
         Array.from(Storage.getTasks(projectTitle)).forEach((task) =>
             DisplayTask.displayTask(task)
