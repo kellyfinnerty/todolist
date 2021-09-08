@@ -33,6 +33,7 @@
     "webpack-dev-server": "^4.0.0"
   },
   "dependencies": {
+    "date-fns": "^2.23.0",
     "style-loader": "^3.2.1"
   },
   "prettier": {
@@ -40,5 +41,5 @@
     "tabWidth": 4,
     "semi": false,
     "singleQuote": true
-  } 
+  }
 }

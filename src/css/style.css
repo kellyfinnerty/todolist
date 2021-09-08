@@ -5,6 +5,7 @@
     --mydarkpurple: #5D576B;
     --my-purple: #807891;
     --task-header: #f0efeb;
+    --task-header-hover: #f8f8f6;
 }
 
 body{
@@ -267,4 +268,8 @@ button{
       display: grid;
       grid-template-columns: 60% 15% 8% 6%;
       margin-right: 10%;
+  }
+
+  .task-header:hover{
+      background-color: var(--task-header-hover) 
   }

@@ -1,3 +1,4 @@
+import { format, formatDistanceToNow } from 'date-fns'
 // eslint-disable-next-line import/extensions
 import Task from '../task.js'
 import '../../css/style.css'
@@ -44,7 +45,20 @@ export default class DisplayTask {
         taskTitle.classList.add('task-title')
 
         const dueDate = document.createElement('p')
-        dueDate.textContent = task.getDueDate()
+        let formattedDate = task.getDueDate()
+        try {
+            formattedDate = `due ${format(
+                new Date(task.getDueDate()),
+                'MM-dd-yyyy'
+            )}`
+            formattedDate = `due ${formatDistanceToNow(
+                new Date(task.getDueDate()),
+                { addSuffix: true }
+            )}`
+        } catch (error) {
+            formattedDate = ''
+        }
+        dueDate.textContent = formattedDate
         dueDate.classList.add('due-date')
 
         const edit = document.createElement('button')
