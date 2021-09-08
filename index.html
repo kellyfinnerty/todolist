@@ -33,7 +33,37 @@
           <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Add a task</h2>
-            <input id="task-title" type="text">
+            
+            <p>
+              <label for="task-title">
+                <span>Title</span>
+                <input id="task-title" type="text" required minlength="1" maxlength="500">
+              </label> 
+            </p>
+            
+            <p>
+              <label for="newTask-description">
+                <span>Description</span>
+                <input id="newTask-description" type="text" maxlength="750">
+              </label>
+            </p>
+
+            <p>
+              <label for="newTask-dueDate">
+                <span>Due Date</span>
+                <input id="newTask-dueDate" type="date">
+              </label>
+            </p>
+
+            <p>
+              <fieldset>
+                <span>Priority</span>
+                <input type="radio" name="priority" id="low" value="low"><label for="low">Low</label>
+                <input type="radio" name="priority" id="medium" value="medium"><label for="medium">Medium</label>
+                <input type="radio" name="priority" id="high" value="high"><label for="high">High</label>
+              </fieldset>
+            </p>
+
             <button id="add-task">Create Task</button>
           </div>
         </div>
