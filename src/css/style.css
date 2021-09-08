@@ -16,7 +16,8 @@ body{
 
 .site-container{
     display: grid;
-    grid-template-rows: 11.3vh 88.7vh;
+    /* grid-template-rows: 90px 745px; */
+    grid-template-rows: 90px 89.5vh;
 }
 
 .class-container{
@@ -30,6 +31,10 @@ body{
     color: white;
     padding: 5px;
     padding-left: 20px;
+
+    box-shadow: 1px 0.5px 5px grey;
+    position: relative;
+    z-index: 2;
 }
 
 .display-container{
@@ -272,4 +277,8 @@ button{
 
   .task-header:hover{
       background-color: var(--task-header-hover) 
+  }
+
+  .overdue{
+      color: red;
   }

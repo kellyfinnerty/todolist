@@ -44,22 +44,7 @@ export default class DisplayTask {
         taskTitle.textContent = task.getTitle()
         taskTitle.classList.add('task-title')
 
-        const dueDate = document.createElement('p')
-        let formattedDate = task.getDueDate()
-        try {
-            formattedDate = `due ${format(
-                new Date(task.getDueDate()),
-                'MM-dd-yyyy'
-            )}`
-            formattedDate = `due ${formatDistanceToNow(
-                new Date(task.getDueDate()),
-                { addSuffix: true }
-            )}`
-        } catch (error) {
-            formattedDate = ''
-        }
-        dueDate.textContent = formattedDate
-        dueDate.classList.add('due-date')
+        const dueDate = DisplayTask.displayDate(task.getDueDate())
 
         const edit = document.createElement('button')
         edit.textContent = 'Edit'
@@ -75,6 +60,29 @@ export default class DisplayTask {
         taskHeaderDiv.appendChild(dueDate)
         taskHeaderDiv.appendChild(edit)
         taskHeaderDiv.appendChild(deleteTask)
+    }
+
+    static displayDate(dueDate) {
+        const dueDatePar = document.createElement('p')
+        let formattedDate = dueDate
+
+        try {
+            formattedDate = `due ${format(new Date(dueDate), 'MM-dd-yyyy')}`
+            formattedDate = `due ${formatDistanceToNow(new Date(dueDate), {
+                addSuffix: true,
+            })}`
+        } catch (error) {
+            formattedDate = ''
+        }
+
+        dueDatePar.textContent = formattedDate
+        dueDatePar.classList.add('due-date')
+
+        if (formattedDate.includes('ago')) {
+            dueDatePar.classList.add('overdue')
+        }
+
+        return dueDatePar
     }
 
     static initializeTaskButtons() {
