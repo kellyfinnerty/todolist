@@ -23,12 +23,18 @@ body{
 
 .add{
     background-color: rgb(230, 163, 82);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
     border: none;
     color: white;
 }
 
+.add{
+    
+}
+
 .add:hover{
     background-color: black;
+    background: black;
     color: white;
 }
 
@@ -172,7 +178,7 @@ button{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
+    padding-top: 140px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -188,7 +194,7 @@ button{
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 40%;
   }
   
   /* The Close Button */

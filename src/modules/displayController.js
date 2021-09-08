@@ -5,6 +5,8 @@ import Project from './project.js'
 // eslint-disable-next-line import/extensions
 import Storage from './storageManager.js'
 import '../css/style.css'
+// eslint-disable-next-line import/extensions
+import DisplayTask from './displayModules/displayTask.js'
 
 export default class UI {
     // eslint-disable-next-line class-methods-use-this
@@ -105,6 +107,9 @@ export default class UI {
         projects.forEach((proj) => proj.classList.remove('active'))
         project.classList.add('active')
 
+        // const taskMaster = new DisplayTask()
+        // taskMaster.createTaskBoard(project)
+
         this.createTaskBoard(project)
     }
 
@@ -168,10 +173,46 @@ export default class UI {
                     this.deleteTask(deleteBtn)
                 )
         )
+        Array.from(document.querySelectorAll('.task')).forEach((task) =>
+            task.addEventListener('click', (e) => {
+                const targ = e.target
+                if (!task.classList.contains('task-expanded')) {
+                    this.openTask(task)
+                } else {
+                    this.closeTask(task)
+                }
+            })
+        )
     }
 
     static getActiveProjectTitle() {
         return document.querySelector('.active').firstChild.textContent
+    }
+
+    static openTask(task) {
+        const projTitle = this.getActiveProjectTitle()
+        const taskName = task.firstChild.textContent
+        const storedTask = Storage.getTask(projTitle, taskName)
+
+        task.classList.add('task-expanded')
+
+        const div = document.createElement('div')
+        div.classList.add('task-details')
+
+        const desc = document.createElement('p')
+        desc.textContent = storedTask.getDescription()
+
+        const priority = document.createElement('p')
+        priority.textContent = `Priority: ${storedTask.getPriority()}`
+
+        task.appendChild(div)
+        div.appendChild(desc)
+        div.appendChild(priority)
+    }
+
+    static closeTask(task) {
+        task.removeChild(task.getElementsByClassName('task-details')[0])
+        task.classList.toggle('task-expanded')
     }
 
     static deleteTask(deleteBtn) {
@@ -188,14 +229,16 @@ export default class UI {
         const openNewProjButton = document.querySelector('#open-task-form')
         const closeModal = document.querySelector('.close')
         const modal = document.querySelector('.modal')
+        const addTask = document.getElementById('add-task')
 
         openNewProjButton.addEventListener('click', this.openModal)
         closeModal.addEventListener('click', this.closeModal)
         window.addEventListener('click', (e) => {
-            if (e.target == modal) {
+            if (e.target === modal) {
                 this.closeModal()
             }
         })
+        addTask.addEventListener('click', this.createTask)
     }
 
     static openModal() {
@@ -207,33 +250,45 @@ export default class UI {
     }
 
     static createTask() {
-        const taskTitle = document.getElementById('task-title').value
+        const taskTitle = document.getElementById('task-title')
+        const description = document.getElementById('newTask-description')
+        const dueDate = document.getElementById('newTask-dueDate')
+        const priority = Array.from(document.getElementsByName('priority'))
 
-        if (taskTitle.length === 0) return
-
-        const projectTitle = this.getActiveProjectTitle()
+        const projectTitle = UI.getActiveProjectTitle()
 
         try {
-            this.checkTaskUserInput(projectTitle, taskTitle)
+            UI.checkTaskUserInput(projectTitle, taskTitle)
         } catch (errorMessage) {
             alert(errorMessage)
             return
         }
 
         const newTask = new Task(
-            taskTitle,
-            'desc',
+            taskTitle.value,
+            description.value,
             'dueDate',
-            'priority',
+            UI.getPriority(priority),
             'notes'
         )
 
         Storage.storeTask(projectTitle, newTask)
-        this.displayTask(newTask)
+        UI.displayTask(newTask)
 
-        this.initializeTaskButtons()
+        UI.initializeTaskButtons()
 
-        document.querySelector('#task-title').value = ''
+        taskTitle.value = ''
+        description.value = ''
+    }
+
+    static getPriority(priorities) {
+        for (let i = 0; i < priorities.length; i++) {
+            if (priorities[i].checked) {
+                return priorities[i].value
+            }
+        }
+
+        return 'n/a'
     }
 
     static checkTaskUserInput(projectName, name) {

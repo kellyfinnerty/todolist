@@ -27,11 +27,11 @@ export default class Task {
         this._title = value
     }
 
-    get description() {
+    getDescription() {
         return this._desc
     }
 
-    set description(value) {
+    setDescription(value) {
         if (value.length > this._maxDesc || value.length < this._minTitle) {
             throw new Error(
                 `Invalid description length ${value.length}/${this._maxDesc}`
@@ -49,11 +49,11 @@ export default class Task {
         this._dueDate = value
     }
 
-    get priority() {
+    getPriority() {
         return this._priority
     }
 
-    set priority(value) {
+    setPriority(value) {
         // check
         this._priority = value
     }
