@@ -33,15 +33,18 @@ export default class DisplayTask {
     static displayTask(task) {
         const area = document.getElementById('task-list')
 
-        const div = document.createElement('div')
-        div.classList.add('task')
+        const taskDiv = document.createElement('div')
+        taskDiv.classList.add('task')
+
+        const taskHeaderDiv = document.createElement('div')
+        taskHeaderDiv.classList.add('task-header')
 
         const taskTitle = document.createElement('h3')
         taskTitle.textContent = task.getTitle()
         taskTitle.classList.add('task-title')
 
         const dueDate = document.createElement('p')
-        dueDate.textContent = `due 09-05-2021`
+        dueDate.textContent = task.getDueDate()
         dueDate.classList.add('due-date')
 
         const edit = document.createElement('button')
@@ -52,11 +55,12 @@ export default class DisplayTask {
         deleteTask.textContent = 'x'
         deleteTask.classList.add('delete-task')
 
-        area.appendChild(div)
-        div.appendChild(taskTitle)
-        div.appendChild(dueDate)
-        div.appendChild(edit)
-        div.appendChild(deleteTask)
+        area.appendChild(taskDiv)
+        taskDiv.appendChild(taskHeaderDiv)
+        taskHeaderDiv.appendChild(taskTitle)
+        taskHeaderDiv.appendChild(dueDate)
+        taskHeaderDiv.appendChild(edit)
+        taskHeaderDiv.appendChild(deleteTask)
     }
 
     static initializeTaskButtons() {
@@ -66,13 +70,14 @@ export default class DisplayTask {
                     DisplayTask.deleteTask(deleteBtn)
                 )
         )
-        Array.from(document.querySelectorAll('.task')).forEach((task) =>
+        Array.from(document.querySelectorAll('.task-header')).forEach((task) =>
             task.addEventListener('click', (e) => {
-                const targ = e.target
-                if (!task.classList.contains('task-expanded')) {
-                    DisplayTask.openTask(task)
+                if (e.target.classList.contains('edit-task')) return
+                if (e.target.classList.contains('delete-task')) return
+                if (!task.parentNode.classList.contains('task-expanded')) {
+                    DisplayTask.openTask(task.parentNode)
                 } else {
-                    DisplayTask.closeTask(task)
+                    DisplayTask.closeTask(task.parentNode)
                 }
             })
         )
@@ -84,7 +89,7 @@ export default class DisplayTask {
 
     static openTask(task) {
         const projTitle = DisplayTask.getActiveProjectTitle()
-        const taskName = task.firstChild.textContent
+        const taskName = task.firstChild.firstChild.textContent
         const storedTask = Storage.getTask(projTitle, taskName)
 
         task.classList.add('task-expanded')
@@ -96,7 +101,10 @@ export default class DisplayTask {
         desc.textContent = storedTask.getDescription()
 
         const priority = document.createElement('p')
-        priority.textContent = `Priority: ${storedTask.getPriority()}`
+        const priorityTxt = storedTask.getPriority()
+        priority.textContent = `Priority: ${
+            priorityTxt[0].toUpperCase() + priorityTxt.substring(1)
+        }`
 
         task.appendChild(div)
         div.appendChild(desc)
@@ -115,7 +123,7 @@ export default class DisplayTask {
         Storage.removeTask(projectTitle, taskName)
 
         // remove HTML
-        deleteBtn.parentElement.remove()
+        deleteBtn.parentElement.parentElement.remove()
     }
 
     static initNewTaskForm() {
@@ -160,7 +168,7 @@ export default class DisplayTask {
         const newTask = new Task(
             taskTitle.value,
             description.value,
-            'dueDate',
+            dueDate.value,
             DisplayTask.getPriority(priority),
             'notes'
         )
@@ -172,6 +180,17 @@ export default class DisplayTask {
 
         taskTitle.value = ''
         description.value = ''
+        const today = new Date()
+        dueDate.value = today.getDate()
+        DisplayTask.clearPriority(priority)
+    }
+
+    static clearPriority(priorities) {
+        for (let i = 0; i < priorities.length; i++) {
+            if (priorities[i].checked) {
+                priorities[i].checked = false
+            }
+        }
     }
 
     static getPriority(priorities) {
@@ -181,7 +200,7 @@ export default class DisplayTask {
             }
         }
 
-        return 'n/a'
+        return 'none'
     }
 
     static checkTaskUserInput(projectName, name) {

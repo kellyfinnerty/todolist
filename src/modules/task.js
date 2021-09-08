@@ -40,11 +40,11 @@ export default class Task {
         this._desc = value
     }
 
-    get dueDate() {
+    getDueDate() {
         return this._dueDate
     }
 
-    set dueDate(value) {
+    setDueDate(value) {
         // check
         this._dueDate = value
     }
