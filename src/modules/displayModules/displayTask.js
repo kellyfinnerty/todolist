@@ -1,0 +1,197 @@
+// eslint-disable-next-line import/extensions
+import Task from '../task.js'
+import '../../css/style.css'
+// eslint-disable-next-line import/extensions
+import Storage from '../storageManager.js'
+
+export default class DisplayTask {
+    createTaskBoard(project) {
+        DisplayTask.clearTaskBoard()
+
+        document.getElementById('welcome').classList.add('hidden')
+        document.getElementById('task-area').classList.remove('hidden')
+
+        const projectTitle = project.firstChild.textContent
+        document.getElementById(
+            'curr-project-title'
+        ).textContent = `${projectTitle} Tasks`
+
+        Array.from(Storage.getTasks(projectTitle)).forEach((task) =>
+            DisplayTask.displayTask(task)
+        )
+
+        DisplayTask.initNewTaskForm()
+        DisplayTask.initializeTaskButtons()
+    }
+
+    static clearTaskBoard() {
+        const tasks = Array.from(document.querySelectorAll('.task'))
+        tasks.forEach((task) => task.parentNode.removeChild(task))
+    }
+
+    static displayTask(task) {
+        const area = document.getElementById('task-list')
+
+        const div = document.createElement('div')
+        div.classList.add('task')
+
+        const taskTitle = document.createElement('h3')
+        taskTitle.textContent = task.getTitle()
+        taskTitle.classList.add('task-title')
+
+        const dueDate = document.createElement('p')
+        dueDate.textContent = `due 09-05-2021`
+        dueDate.classList.add('due-date')
+
+        const edit = document.createElement('button')
+        edit.textContent = 'Edit'
+        edit.classList.add('edit-task')
+
+        const deleteTask = document.createElement('button')
+        deleteTask.textContent = 'x'
+        deleteTask.classList.add('delete-task')
+
+        area.appendChild(div)
+        div.appendChild(taskTitle)
+        div.appendChild(dueDate)
+        div.appendChild(edit)
+        div.appendChild(deleteTask)
+    }
+
+    static initializeTaskButtons() {
+        Array.from(document.querySelectorAll('.delete-task')).forEach(
+            (deleteBtn) =>
+                deleteBtn.addEventListener('click', () =>
+                    DisplayTask.deleteTask(deleteBtn)
+                )
+        )
+        Array.from(document.querySelectorAll('.task')).forEach((task) =>
+            task.addEventListener('click', (e) => {
+                const targ = e.target
+                if (!task.classList.contains('task-expanded')) {
+                    DisplayTask.openTask(task)
+                } else {
+                    DisplayTask.closeTask(task)
+                }
+            })
+        )
+    }
+
+    static getActiveProjectTitle() {
+        return document.querySelector('.active').firstChild.textContent
+    }
+
+    static openTask(task) {
+        const projTitle = DisplayTask.getActiveProjectTitle()
+        const taskName = task.firstChild.textContent
+        const storedTask = Storage.getTask(projTitle, taskName)
+
+        task.classList.add('task-expanded')
+
+        const div = document.createElement('div')
+        div.classList.add('task-details')
+
+        const desc = document.createElement('p')
+        desc.textContent = storedTask.getDescription()
+
+        const priority = document.createElement('p')
+        priority.textContent = `Priority: ${storedTask.getPriority()}`
+
+        task.appendChild(div)
+        div.appendChild(desc)
+        div.appendChild(priority)
+    }
+
+    static closeTask(task) {
+        task.removeChild(task.getElementsByClassName('task-details')[0])
+        task.classList.toggle('task-expanded')
+    }
+
+    static deleteTask(deleteBtn) {
+        const projectTitle = DisplayTask.getActiveProjectTitle()
+        const taskName = deleteBtn.previousElementSibling.textContent
+
+        Storage.removeTask(projectTitle, taskName)
+
+        // remove HTML
+        deleteBtn.parentElement.remove()
+    }
+
+    static initNewTaskForm() {
+        const openNewProjButton = document.querySelector('#open-task-form')
+        const closeModal = document.querySelector('.close')
+        const modal = document.querySelector('.modal')
+        const addTask = document.getElementById('add-task')
+
+        openNewProjButton.addEventListener('click', DisplayTask.openModal)
+        closeModal.addEventListener('click', DisplayTask.closeModal)
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                DisplayTask.closeModal()
+            }
+        })
+        addTask.addEventListener('click', DisplayTask.createTask)
+    }
+
+    static openModal() {
+        document.querySelector('.modal').style.display = 'block'
+    }
+
+    static closeModal() {
+        document.querySelector('.modal').style.display = 'none'
+    }
+
+    static createTask() {
+        const taskTitle = document.getElementById('task-title')
+        const description = document.getElementById('newTask-description')
+        const dueDate = document.getElementById('newTask-dueDate')
+        const priority = Array.from(document.getElementsByName('priority'))
+
+        const projectTitle = DisplayTask.getActiveProjectTitle()
+
+        try {
+            DisplayTask.checkTaskUserInput(projectTitle, taskTitle)
+        } catch (errorMessage) {
+            alert(errorMessage)
+            return
+        }
+
+        const newTask = new Task(
+            taskTitle.value,
+            description.value,
+            'dueDate',
+            DisplayTask.getPriority(priority),
+            'notes'
+        )
+
+        Storage.storeTask(projectTitle, newTask)
+        DisplayTask.displayTask(newTask)
+
+        DisplayTask.initializeTaskButtons()
+
+        taskTitle.value = ''
+        description.value = ''
+    }
+
+    static getPriority(priorities) {
+        for (let i = 0; i < priorities.length; i++) {
+            if (priorities[i].checked) {
+                return priorities[i].value
+            }
+        }
+
+        return 'n/a'
+    }
+
+    static checkTaskUserInput(projectName, name) {
+        const maxNameLength = 750
+
+        if (name.length > maxNameLength) {
+            throw Error('Task name exceeded 750 characters')
+        } else if (name.length < 1) {
+            throw Error('Project title too short')
+        } else if (typeof Storage.getTask(projectName, name) === 'object') {
+            throw Error('Must be a unique task name')
+        }
+    }
+}
