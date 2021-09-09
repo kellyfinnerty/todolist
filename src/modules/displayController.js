@@ -40,7 +40,7 @@ export default class UI {
 
         const deleteHTML = document.createElement('button')
         deleteHTML.classList.add('delete-project')
-        deleteHTML.textContent = 'x'
+        deleteHTML.innerHTML = '&times'
         deleteHTML.addEventListener('click', (event) => {
             this.deleteProject(event)
         })
@@ -70,8 +70,8 @@ export default class UI {
         const projects = Array.from(document.querySelectorAll('.project'))
 
         projects.forEach((project) =>
-            project.addEventListener('click', (event) => {
-                UI.selectProject(event, project)
+            project.addEventListener('click', () => {
+                UI.selectProject(project)
             })
         )
     }
@@ -81,18 +81,37 @@ export default class UI {
         const title = event.target.previousElementSibling.textContent
 
         if (projectDiv.classList.contains('active')) {
-            this.clearTaskBoard()
-        } // delete the tasks
+            this.displayNextProject(projectDiv)
+        }
 
         projectDiv.remove() // remove project Div
 
         // remove from storage
         Storage.removeStoredProject(title)
-
-        // display next project
     }
 
-    static selectProject(event, project) {
+    static displayNextProject(project) {
+        // last project
+        const nextProj = project.nextSibling
+        console.log(project)
+        const prevProj = project.previousSibling
+        let selProj = null
+
+        if (nextProj === null && prevProj === null) {
+            document.getElementById('task-area').classList.toggle('hidden')
+            document.getElementById('welcome').classList.toggle('hidden')
+        } else if (nextProj === null) {
+            selProj = prevProj
+        } else {
+            selProj = nextProj
+        }
+
+        selProj.classList.add('active')
+
+        this.selectProject(selProj)
+    }
+
+    static selectProject(project) {
         // check if project has been deleted
         if (
             typeof Storage.getStoredProject(project.firstChild.textContent) !==

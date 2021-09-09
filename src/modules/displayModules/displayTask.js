@@ -1,7 +1,7 @@
 import { format, formatDistanceToNow } from 'date-fns'
 // eslint-disable-next-line import/extensions
 import Task from '../task.js'
-import '../../css/style.css'
+import '../../css/task-style.css'
 // eslint-disable-next-line import/extensions
 import Storage from '../storageManager.js'
 
@@ -51,8 +51,10 @@ export default class DisplayTask {
         edit.classList.add('edit-task')
 
         const deleteTask = document.createElement('button')
-        deleteTask.textContent = 'x'
+        deleteTask.innerHTML = '&times'
         deleteTask.classList.add('delete-task')
+
+        DisplayTask.addPriorityClass(taskHeaderDiv, task.getPriority())
 
         area.appendChild(taskDiv)
         taskDiv.appendChild(taskHeaderDiv)
@@ -177,13 +179,13 @@ export default class DisplayTask {
         const description = document.getElementById('newTask-description')
         const dueDate = document.getElementById('newTask-dueDate')
         const priority = Array.from(document.getElementsByName('priority'))
+        const taskPriority = DisplayTask.getPriority(priority)
 
         const projectTitle = DisplayTask.getActiveProjectTitle()
 
         try {
-            DisplayTask.checkTaskUserInput(projectTitle, taskTitle)
-        } catch (errorMessage) {
-            alert(errorMessage)
+            DisplayTask.checkData()
+        } catch {
             return
         }
 
@@ -191,7 +193,7 @@ export default class DisplayTask {
             taskTitle.value,
             description.value,
             dueDate.value,
-            DisplayTask.getPriority(priority),
+            taskPriority,
             'notes'
         )
 
@@ -205,6 +207,8 @@ export default class DisplayTask {
         const today = new Date()
         dueDate.value = today.getDate()
         DisplayTask.clearPriority(priority)
+
+        document.getElementById('title-error').value = ''
     }
 
     static clearPriority(priorities) {
@@ -225,15 +229,37 @@ export default class DisplayTask {
         return 'none'
     }
 
-    static checkTaskUserInput(projectName, name) {
+    static addPriorityClass(taskHTML, priority) {
+        if (priority !== 'none') {
+            taskHTML.classList.add(priority)
+        }
+    }
+
+    static checkData() {
+        const projectTitle = DisplayTask.getActiveProjectTitle()
+        const taskTitle = document.getElementById('task-title')
+        const description = document.getElementById('newTask-description')
+        const dueDate = document.getElementById('newTask-dueDate')
+        const priority = Array.from(document.getElementsByName('priority'))
+        const taskPriority = DisplayTask.getPriority(priority)
+
+        try {
+            DisplayTask.checkTaskTitle(projectTitle, taskTitle.value)
+        } catch (errorMessage) {
+            document.getElementById('title-error').textContent = errorMessage
+            throw Error('Failed data check')
+        }
+    }
+
+    static checkTaskTitle(projectName, title) {
         const maxNameLength = 750
 
-        if (name.length > maxNameLength) {
-            throw Error('Task name exceeded 750 characters')
-        } else if (name.length < 1) {
+        if (title.length < 1) {
             throw Error('Project title too short')
-        } else if (typeof Storage.getTask(projectName, name) === 'object') {
-            throw Error('Must be a unique task name')
+        } else if (title.length > maxNameLength) {
+            throw Error('Task name exceeded 750 characters')
+        } else if (typeof Storage.getTask(projectName, title) === 'object') {
+            throw Error('Please enter a unique task name')
         }
     }
 }

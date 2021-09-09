@@ -30,16 +30,23 @@ body{
     background-color: var(--my-purple);
     color: white;
     padding: 5px;
-    padding-left: 20px;
+    padding-left: 2rem;
+    padding-top: 1rem;
 
     box-shadow: 1px 0.5px 5px grey;
     position: relative;
     z-index: 2;
 }
 
+.logo{
+    font-family: 'Bungee Shade', cursive;
+    font-size: 2.3rem;
+    cursor: default;
+}
+
 .display-container{
     display: grid;
-    grid-template-columns: 16rem auto;
+    grid-template-columns: 17rem auto;
     gap: 4%;
 }
 
@@ -68,6 +75,7 @@ body{
 
 .project:hover .delete-project{
     display: block;
+    cursor: pointer;
 }
 
 button{
@@ -76,21 +84,25 @@ button{
     border: solid .7px black;
     border-radius: 10px;
     padding: 4px 8px 4px 8px;
+    cursor: grab;
 }
 
 .project{
     border-radius: 10px;
     align-content: center;
-    margin-left: 1rem;
+    margin-left: 0.8rem;
 
     display: grid;
-    grid-template-columns: 11.5rem 2rem;
+    grid-template-columns: 11rem 2rem;
     grid-gap: 0.5em;
+
+    cursor: pointer;
 
 }
 
 #project-area{
     background-color: var(--blanched-almond);
+    padding: 1rem;
 }
 
 .project-title{
@@ -103,19 +115,16 @@ button{
 .project-category{
     font-size: 1.15rem;
     margin-left: 1.1em;
+    cursor: default;
 }
 
-.delete-task, .edit-task{
+.edit-task{
     align-self: center;
     justify-self: center;
     height: 1.8rem;
 }
 
-.delete-task:hover{
-    background-color: rgb(230, 230, 230);
-    color: white;
-    border: none;
-}
+
 
 .delete-project{
     display: none;
@@ -172,113 +181,9 @@ button{
 }
 
 
-
-#open-project-form, #open-task-form{
-    margin-left: 3.5rem;
-    margin-top: 2rem;
-    justify-self: center;
-    align-self: center;
-    grid-row-start: 1;
-    grid-row-end: 3;
-
-    padding: 0.6rem;
-    padding-right: 0.7rem;
-
-    font-size: 1rem;
+.logo, .project-category{
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
-
-
-#task-list{
-    display: grid;
-    gap: 10px;
-}
-
-#project-list{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-    padding-right: 17px;
-    max-height: 50vh;
-    max-width: 700px;
-}
-
-#open-task-form{
-    margin-left: 0;
-    margin-top: 15px;
-    margin-bottom: 20px;
-}
-
-
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 180px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content */
-  .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 3.5px;
-    width: 40%;
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  #curr-project-title{
-      margin-top: 50px;
-      margin-bottom: 20px;
-  }
-
-  .task-details, .task-title{
-      margin-left: 15px;
-  }
-
-  .due-date{
-      align-self: center;
-  }
-
-  .task-header{
-      background-color: var(--task-header);
-      margin: 0;
-      padding: 0;
-      border-radius: 3px;
-
-      display: grid;
-      grid-template-columns: 60% 15% 8% 6%;
-      margin-right: 10%;
-  }
-
-  .task-header:hover{
-      background-color: var(--task-header-hover) 
-  }
-
-  .overdue{
-      color: red;
-  }

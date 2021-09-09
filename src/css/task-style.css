@@ -1,0 +1,242 @@
+:root{
+    --dark-green: #002500;
+    --russian-green: #6A8D73;
+    --blanched-almond: #f0efeb;
+    --mydarkpurple: #5D576B;
+    --my-purple: #807891;
+    --task-header: #f0efeb;
+    --task-header-hover: #f8f8f6;
+}
+
+#open-project-form, #open-task-form{
+    margin-left: 3.5rem;
+    margin-top: 2rem;
+    justify-self: center;
+    align-self: center;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+    padding: 0.6rem;
+    padding-right: 0.7rem;
+
+    font-size: 1rem;
+}
+
+#task-area{
+    padding: 3rem;
+}
+
+
+#task-list{
+    display: grid;
+    gap: 10px;
+}
+
+#project-list{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    padding-right: 25px;
+    max-height: 50vh;
+    max-width: 700px;
+}
+
+#open-task-form{
+    margin-left: 0;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.delete-task{
+    align-self: center;
+    justify-self: center;
+    height: 1.6rem;
+    border-radius: 50%;
+    display: none;
+    background-color: transparent;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+.task-header:hover .delete-task{
+    display: block;
+}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 150px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    padding-bottom: 30px;
+    border: 1px solid #888;
+    border-radius: 3.5px;
+    width: 50%;
+
+    display: grid;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    justify-self: right;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #curr-project-title{
+      margin-top: 2rem;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      padding-bottom: 0.25rem;
+
+      cursor: default;
+
+      -webkit-user-select: none; /* Safari */        
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* IE10+/Edge */
+      user-select: none; /* Standard */
+  }
+
+  .task-details, .task-title{
+      margin-left: 15px;
+  }
+
+  .task-details{
+      border: solid var(--task-header) 1px;
+      border-top: none;
+      border-radius: 0px 0px 3px 3px;
+
+      margin: 0;
+      padding: 0;
+      margin-right: 10%;
+
+      padding-left: 1rem;
+      padding-top: 0.5rem;
+
+  }
+
+  .due-date{
+      align-self: center;
+      justify-self: right;
+      padding-right: 1rem;
+  }
+
+  .task-header{
+      background-color: var(--task-header);
+      margin: 0;
+      padding: 0;
+      border-radius: 3px;
+
+      display: grid;
+      grid-template-columns: 68% 20% 6% 6%;
+      margin-right: 10%;
+
+      cursor: pointer;
+  }
+
+  .task-header:hover{
+      background-color: var(--task-header-hover);
+  }
+
+  .overdue{
+      color: red;
+  }
+
+  #add-task-header{
+      text-align: center;
+  }
+
+  .user-input{
+      margin: 1rem;
+      margin-top: 1.3rem;
+  }
+
+  #priority{
+      width: 85%;
+  }
+  
+  #low, #medium, #high{
+      margin-left: 1.4rem;
+      margin-right: 0.5rem;
+  }
+
+  #newTask-dueDate, #newTask-description, #task-title, #add-task{
+      margin-left: 15px;
+      height: 2em;
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
+      width: 40%;
+  }
+
+  fieldset{
+      border: solid 1px black;
+      border-radius: 3px;
+      padding: 0.8rem;
+  }
+
+  #add-task{
+    width: 105px;
+    height: 40px;
+    
+    margin-top: 10px;
+
+    align-self: center;
+    justify-self: center;
+  }
+
+  #newTask-dueDate{
+      width: 8.11rem;
+  }
+
+  .high{
+    border-left: red solid 4px;
+  }
+
+  .medium{
+    border-left: yellow solid 4px;
+  }
+
+  .low{
+      border-left: green solid 4px;
+  }
+
+  .task{
+      cursor: default;
+  }
+
+
+ label{
+     font-size: 0.9em;
+ }
+
+ .form-error{
+     font-size: 0.7em;
+     color: red;
+ }
