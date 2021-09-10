@@ -1,6 +1,7 @@
 import { format, formatDistanceToNow } from 'date-fns'
 // eslint-disable-next-line import/extensions
-import Task from '../task.js'
+// import Task from '../task.js'
+import TaskForm from './taskForm.js'
 import '../../css/task-style.css'
 // eslint-disable-next-line import/extensions
 import Storage from '../storageManager.js'
@@ -19,11 +20,12 @@ export default class DisplayTask {
         ).textContent = `${projectTitle}`
 
         Array.from(Storage.getTasks(projectTitle)).forEach((task) =>
-            DisplayTask.displayTask(task)
+            this.displayTask(task)
         )
 
-        DisplayTask.initNewTaskForm()
-        DisplayTask.initializeTaskButtons()
+        const taskForm = new TaskForm()
+        taskForm.initNewTaskForm()
+        // this.initializeTaskButtons()
     }
 
     static clearTaskBoard() {
@@ -31,7 +33,8 @@ export default class DisplayTask {
         tasks.forEach((task) => task.parentNode.removeChild(task))
     }
 
-    static displayTask(task) {
+    // eslint-disable-next-line class-methods-use-this
+    displayTask(task) {
         const area = document.getElementById('task-list')
 
         const taskDiv = document.createElement('div')
@@ -47,7 +50,7 @@ export default class DisplayTask {
         const dueDate = DisplayTask.displayDate(task.getDueDate())
 
         const edit = document.createElement('button')
-        edit.textContent = 'Edit'
+        edit.innerHTML = `<i class="fas fa-edit"></i>`
         edit.classList.add('edit-task')
 
         const deleteTask = document.createElement('button')
@@ -62,6 +65,14 @@ export default class DisplayTask {
         taskHeaderDiv.appendChild(dueDate)
         taskHeaderDiv.appendChild(edit)
         taskHeaderDiv.appendChild(deleteTask)
+
+        // EVENT LISTENERS
+        deleteTask.addEventListener('click', () =>
+            DisplayTask.deleteTask(deleteTask)
+        )
+        taskHeaderDiv.addEventListener('click', (e) => {
+            this.expandTask(taskHeaderDiv, e.target)
+        })
     }
 
     static displayDate(dueDate) {
@@ -87,7 +98,8 @@ export default class DisplayTask {
         return dueDatePar
     }
 
-    static initializeTaskButtons() {
+    // eslint-disable-next-line class-methods-use-this
+    initializeTaskButtons() {
         Array.from(document.querySelectorAll('.delete-task')).forEach(
             (deleteBtn) =>
                 deleteBtn.addEventListener('click', () =>
@@ -96,15 +108,20 @@ export default class DisplayTask {
         )
         Array.from(document.querySelectorAll('.task-header')).forEach((task) =>
             task.addEventListener('click', (e) => {
-                if (e.target.classList.contains('edit-task')) return
-                if (e.target.classList.contains('delete-task')) return
-                if (!task.parentNode.classList.contains('task-expanded')) {
-                    DisplayTask.openTask(task.parentNode)
-                } else {
-                    DisplayTask.closeTask(task.parentNode)
-                }
+                this.expandtask(task, e.target)
             })
         )
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    expandTask(task, taskHeader) {
+        if (taskHeader.classList.contains('edit-task')) return
+        if (taskHeader.classList.contains('delete-task')) return
+        if (!task.parentNode.classList.contains('task-expanded')) {
+            DisplayTask.openTask(task.parentNode)
+        } else {
+            DisplayTask.closeTask(task.parentNode)
+        }
     }
 
     static getActiveProjectTitle() {
@@ -122,9 +139,11 @@ export default class DisplayTask {
         div.classList.add('task-details')
 
         const desc = document.createElement('p')
+        desc.classList.add('task-description')
         desc.textContent = storedTask.getDescription()
 
         const priority = document.createElement('p')
+        priority.classList.add('task-priority')
         const priorityTxt = storedTask.getPriority()
         priority.textContent = `Priority: ${
             priorityTxt[0].toUpperCase() + priorityTxt.substring(1)
@@ -150,7 +169,13 @@ export default class DisplayTask {
         deleteBtn.parentElement.parentElement.remove()
     }
 
-    static initNewTaskForm() {
+    static addPriorityClass(taskHTML, priority) {
+        if (priority !== 'none') {
+            taskHTML.classList.add(priority)
+        }
+    }
+
+    /*     static initNewTaskForm() {
         const openNewProjButton = document.querySelector('#open-task-form')
         const closeModal = document.querySelector('.close')
         const modal = document.querySelector('.modal')
@@ -261,5 +286,5 @@ export default class DisplayTask {
         } else if (typeof Storage.getTask(projectName, title) === 'object') {
             throw Error('Please enter a unique task name')
         }
-    }
+    } */
 }

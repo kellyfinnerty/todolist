@@ -6,12 +6,16 @@
     --my-purple: #807891;
     --task-header: #f0efeb;
     --task-header-hover: #f8f8f6;
+    --background: #e69c7571;
+    --salmon: #f28482;
+    --pinky: #eeacab;
 }
 
 body{
     margin: 0;
     font-family: Arial, sans-serif;
-    
+    background-color: white;
+    color: #333;
 }
 
 .site-container{
@@ -27,13 +31,13 @@ body{
 
 #header{
     align-self: center;
-    background-color: var(--my-purple);
+    background-color: var(--salmon);
     color: white;
     padding: 5px;
     padding-left: 2rem;
     padding-top: 1rem;
 
-    box-shadow: 1px 0.5px 5px grey;
+    box-shadow: 1px 0.5px 5px rgb(155, 155, 155);
     position: relative;
     z-index: 2;
 }
@@ -52,14 +56,13 @@ body{
 
 .add{
     background-color: rgb(230, 163, 82);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    background: radial-gradient(circle,rgba(157, 75, 211, 0.7) 20%,  rgba(167, 96, 214, 0.7)100%);
     border: none;
     color: white;
 }
 
 .add:hover{
-    background-color: black;
-    background: black;
+    background: radial-gradient(circle,rgba(131,58,180, .55) 20%,  rgba(146, 89, 184, 0.55)100%);
     color: white;
 }
 
@@ -68,7 +71,7 @@ body{
 }
 
 .active, .project:hover{
-    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    background: linear-gradient(90deg, rgba(131,58,180, 0.6) 0%, rgba(253,29,29, 0.6) 50%, rgba(252,176,69, 0.6) 100%);
     color: white;
     width: 100%;
 }
@@ -88,12 +91,12 @@ button{
 }
 
 .project{
-    border-radius: 10px;
+    border-radius: 7px;
     align-content: center;
     margin-left: 0.8rem;
 
     display: grid;
-    grid-template-columns: 11rem 2rem;
+    grid-template-columns: 10.5rem 1rem;
     grid-gap: 0.5em;
 
     cursor: pointer;
@@ -101,7 +104,7 @@ button{
 }
 
 #project-area{
-    background-color: var(--blanched-almond);
+    background-color: var(--pinky);
     padding: 1rem;
 }
 
@@ -118,13 +121,18 @@ button{
     cursor: default;
 }
 
-.edit-task{
-    align-self: center;
-    justify-self: center;
-    height: 1.8rem;
+#project-list{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    max-height: 50vh;
+    max-width: 700px;
+
+    box-shadow: inset -10px -10px 10px 30px var(--pinky);
+    position: relative;
+    z-index: 1;
 }
-
-
 
 .delete-project{
     display: none;
@@ -186,4 +194,8 @@ button{
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+}
+
+h3{
+    font-weight: normal;
 }

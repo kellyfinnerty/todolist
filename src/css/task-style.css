@@ -24,23 +24,19 @@
 
 #task-area{
     padding: 3rem;
+    padding-top: 2.5rem;
 }
 
+.task-title{
+    font-size: 1.1em;
+    margin: 0.6em;
+}
 
 #task-list{
     display: grid;
     gap: 10px;
 }
 
-#project-list{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-    padding-right: 25px;
-    max-height: 50vh;
-    max-width: 700px;
-}
 
 #open-task-form{
     margin-left: 0;
@@ -51,19 +47,25 @@
 .delete-task{
     align-self: center;
     justify-self: center;
-    height: 1.6rem;
-    border-radius: 50%;
+    height: 1.4rem;
+    width: 1.4rem;
+    border-radius: 30%;
     display: none;
     background-color: transparent;
-    color: black;
     border: none;
     cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 
 .task-header:hover .delete-task{
     display: block;
 }
 
+.delete-task:hover{
+    background-color: var(--my-purple);
+    color: white;
+}
 
 
 /* The Modal (background) */
@@ -113,7 +115,7 @@
   #curr-project-title{
       margin-top: 2rem;
       margin-bottom: 20px;
-      font-size: 2rem;
+      font-size: 1.8rem;
       padding-bottom: 0.25rem;
 
       cursor: default;
@@ -137,15 +139,24 @@
       padding: 0;
       margin-right: 10%;
 
-      padding-left: 1rem;
-      padding-top: 0.5rem;
+      padding-left: 0.8rem;
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
 
   }
+
+  .task-description, .task-priority{
+    margin: 0.65em;
+ }
+ .task-description{
+     font-style: italic;
+ }
 
   .due-date{
       align-self: center;
       justify-self: right;
       padding-right: 1rem;
+      font-size: 0.85rem;
   }
 
   .task-header{
@@ -155,10 +166,18 @@
       border-radius: 3px;
 
       display: grid;
-      grid-template-columns: 68% 20% 6% 6%;
+      grid-template-columns: 68% 26% 3% 3%;
       margin-right: 10%;
 
       cursor: pointer;
+  }
+
+  .task-header{
+    grid-template-columns: 74% 26%;
+  }
+
+  .task-header:hover{
+    grid-template-columns: 66% 26% 4% 4%;
   }
 
   .task-header:hover{
@@ -181,6 +200,25 @@
   #priority{
       width: 85%;
   }
+
+  .edit-task{
+    display: none;
+    align-self: center;
+    justify-self: center;
+    height: 1.8rem;
+    background-color: transparent;
+    border: none;
+}
+
+.task-header:hover .edit-task{
+    display: block;
+}
+
+.edit-task:hover{
+    background-color: var(--my-purple);
+    color: white;
+}
+
   
   #low, #medium, #high{
       margin-left: 1.4rem;
@@ -240,3 +278,6 @@
      font-size: 0.7em;
      color: red;
  }
+
+
+
