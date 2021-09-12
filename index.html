@@ -25,6 +25,7 @@
         <button id="open-project-form" class="add">&plus; Create Project</button>
         <div id="project-form" class="project-form-container hidden">
           <input id="project-title" type="text" placeholder="Project Name" required>
+          <small>Error</small>
           <button id="add-project">Add</button>
           <button id="cancel-add-project">Cancel</button>
         </div>
@@ -44,14 +45,14 @@
             
 
             <form novalidate>
-              <div class="user-input">
+              <div class="user-input success">
                 <label for="task-title">Title</label> 
                 <input id="task-title" type="text" required minlength="1" maxlength="500" data-missing-error="Please enter a task title">
                 
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
-                <br><span id="title-error" class="form-error" aria-live="polite"></span>
+                <!-- <br><span id="title-error" class="form-error" aria-live="polite"></span> -->
               </div>
               
               <div class="user-input">
