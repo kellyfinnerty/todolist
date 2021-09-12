@@ -4,6 +4,8 @@ import TaskForm from './taskForm.js'
 import '../../css/task-style.css'
 // eslint-disable-next-line import/extensions
 import Storage from '../storageManager.js'
+import { format, formatDistanceToNow } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
 
 export default class DisplayTask {
     // eslint-disable-next-line class-methods-use-this
@@ -73,12 +75,17 @@ export default class DisplayTask {
         })
     }
 
+    static getTimeZone() {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone
+    }
+
     static displayDate(dueDate) {
         const dueDatePar = document.createElement('p')
-        let formattedDate = dueDate
+        let formattedDate = new Date(dueDate)
+        formattedDate.setHours(0, 0, 0, 0)
 
         try {
-            formattedDate = `due ${format(new Date(dueDate), 'MM-dd-yyyy')}`
+            formattedDate = `due ${format(formattedDate, 'MM-dd-yyyy')}`
             formattedDate = `due ${formatDistanceToNow(new Date(dueDate), {
                 addSuffix: true,
             })}`

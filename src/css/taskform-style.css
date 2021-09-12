@@ -79,6 +79,7 @@ label{
 
 #priority span {
     float: left;
+    font-size: 0.9em;
 }
 
 #priority label {
@@ -117,8 +118,8 @@ label{
 .user-input i {
     visibility: hidden;
     position: absolute;
-    top: 40px;
-    right: 10px;
+    top: 43%;
+    right: 3%;
 }
 
 .user-input.success i.fa-check-circle {

@@ -23,7 +23,11 @@ export default class TaskForm {
         })
 
         title.addEventListener('input', () => {
-            TaskForm.errorCheck()
+            try {
+                TaskForm.errorCheck()
+            } catch {
+                return
+            }
         })
 
         addTask.addEventListener('click', (e) => {
@@ -108,9 +112,9 @@ export default class TaskForm {
 
         try {
             TaskForm.checkTaskTitle(projectTitle, inputs.title.value)
-            document.getElementById('title-error').textContent = ''
+            document.querySelector('small').textContent = ''
         } catch (errorMessage) {
-            document.getElementById('title-error').textContent = errorMessage
+            document.querySelector('small').textContent = errorMessage
             throw Error('Failed data check')
         }
     }
