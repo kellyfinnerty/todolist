@@ -16,6 +16,7 @@ export default class UI {
         this.displayAllProjects()
         this.initProjectButtons()
         this.initNewProjectButtons()
+        this.today()
     }
 
     static displayAllProjects() {
@@ -162,5 +163,25 @@ export default class UI {
         document.querySelector('#project-title').value = ''
 
         this.initProjectButtons()
+    }
+
+    static today() {
+        document.getElementById('today').addEventListener('click', () => {
+            const projs = Array.from(Storage.getAllStoredProjects())
+            projs.forEach((proj) => {
+                proj.getTaskList().forEach((task) => {
+                    const today = new Date()
+                    // today = `${today.getFullYear()}-${today.getDate()}-${today.getMonth()}`
+                    const taskDate = task.getDueDate()
+                    // const taskDate = new Date(task.getDueDate())
+
+                    today.setHours(0, 0, 0, 0)
+
+                    if (today === taskDate) {
+                        DisplayTask.displayTask(task)
+                    }
+                })
+            })
+        })
     }
 }

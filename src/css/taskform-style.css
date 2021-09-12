@@ -1,0 +1,179 @@
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 110px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    padding-bottom: 30px;
+    border: 1px solid #888;
+    border-radius: 3.5px;
+    width: 50%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+label{
+    font-size: 0.9em;
+}
+
+.form-error{
+    font-size: 0.7em;
+    color: red;
+}
+
+.user-input{
+    margin: 1rem;
+    margin-top: 1.3rem;
+}
+
+#priority{
+    width: 85%;
+}
+
+.user-input{
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.user-input label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.user-input input, textarea{
+    border: 2px solid #f0f0f0;
+    border-radius: 4px;
+    display: block;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px;
+    width: 95%;
+}
+
+#priority span {
+    float: left;
+}
+
+#priority label {
+    display: block;
+    float: left;
+    margin: 10px;
+    margin-left: 0px;
+}
+
+.user-input input[type='radio']{    
+    width: auto;
+    padding: 10px;
+    margin: 10px;
+    display: inherit;
+
+    float: left;
+}
+
+.user-input textarea{
+    resize: none;
+}
+
+.user-input input:focus, .user-input textarea:focus {
+    outline: 0;
+    border-color: #777;
+}
+
+.user-input.success input{
+    border-color: #2ecc71;
+}
+
+.user-input.error input{
+    border-color: #e74c3c;
+}
+
+.user-input i {
+    visibility: hidden;
+    position: absolute;
+    top: 40px;
+    right: 10px;
+}
+
+.user-input.success i.fa-check-circle {
+    color: #2ecc71;
+    visibility: visible;
+}
+
+.user-input.error i.fa-exclamation-circle {
+    color: #e74c3c;
+    visibility: visible;
+}
+
+.user-input small{
+    color: #e74c3c;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.form-control.error small {
+    visibility: visible;
+}
+
+form button {
+	background: linear-gradient(90deg, rgba(131,58,180, 0.6) 0%, rgba(253,29,29, 0.6) 50%, rgba(252,176,69, 0.6) 100%);
+	border-radius: 4px;
+    border: none;
+	color: #fff;
+	display: block;
+	font-family: inherit;
+	font-size: 16px;
+	padding: 14px;
+	margin-top: 20px;
+	width: 100%;
+}
+
+/* #newTask-dueDate, #newTask-description, #task-title, #add-task{
+    margin-left: 15px;
+    height: 2em;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    width: 40%;
+}
+
+#add-task{
+    width: 105px;
+    height: 40px;
+
+    margin-top: 10px;
+
+    align-self: center;
+    justify-self: center;
+}
+
+#newTask-dueDate{
+    width: 8.11rem;
+} */

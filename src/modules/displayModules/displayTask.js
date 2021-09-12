@@ -1,4 +1,3 @@
-import { format, formatDistanceToNow } from 'date-fns'
 // eslint-disable-next-line import/extensions
 // import Task from '../task.js'
 import TaskForm from './taskForm.js'
@@ -25,7 +24,6 @@ export default class DisplayTask {
 
         const taskForm = new TaskForm()
         taskForm.initNewTaskForm()
-        // this.initializeTaskButtons()
     }
 
     static clearTaskBoard() {
@@ -174,117 +172,4 @@ export default class DisplayTask {
             taskHTML.classList.add(priority)
         }
     }
-
-    /*     static initNewTaskForm() {
-        const openNewProjButton = document.querySelector('#open-task-form')
-        const closeModal = document.querySelector('.close')
-        const modal = document.querySelector('.modal')
-        const addTask = document.getElementById('add-task')
-
-        openNewProjButton.addEventListener('click', DisplayTask.openModal)
-        closeModal.addEventListener('click', DisplayTask.closeModal)
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                DisplayTask.closeModal()
-            }
-        })
-        addTask.addEventListener('click', DisplayTask.createTask)
-    }
-
-    static openModal() {
-        document.querySelector('.modal').style.display = 'block'
-    }
-
-    static closeModal() {
-        document.querySelector('.modal').style.display = 'none'
-    }
-
-    static createTask() {
-        const taskTitle = document.getElementById('task-title')
-        const description = document.getElementById('newTask-description')
-        const dueDate = document.getElementById('newTask-dueDate')
-        const priority = Array.from(document.getElementsByName('priority'))
-        const taskPriority = DisplayTask.getPriority(priority)
-
-        const projectTitle = DisplayTask.getActiveProjectTitle()
-
-        try {
-            DisplayTask.checkData()
-        } catch {
-            return
-        }
-
-        const newTask = new Task(
-            taskTitle.value,
-            description.value,
-            dueDate.value,
-            taskPriority,
-            'notes'
-        )
-
-        Storage.storeTask(projectTitle, newTask)
-        DisplayTask.displayTask(newTask)
-
-        DisplayTask.initializeTaskButtons()
-
-        taskTitle.value = ''
-        description.value = ''
-        const today = new Date()
-        dueDate.value = today.getDate()
-        DisplayTask.clearPriority(priority)
-
-        document.getElementById('title-error').value = ''
-    }
-
-    static clearPriority(priorities) {
-        for (let i = 0; i < priorities.length; i++) {
-            if (priorities[i].checked) {
-                priorities[i].checked = false
-            }
-        }
-    }
-
-    static getPriority(priorities) {
-        for (let i = 0; i < priorities.length; i++) {
-            if (priorities[i].checked) {
-                return priorities[i].value
-            }
-        }
-
-        return 'none'
-    }
-
-    static addPriorityClass(taskHTML, priority) {
-        if (priority !== 'none') {
-            taskHTML.classList.add(priority)
-        }
-    }
-
-    static checkData() {
-        const projectTitle = DisplayTask.getActiveProjectTitle()
-        const taskTitle = document.getElementById('task-title')
-        const description = document.getElementById('newTask-description')
-        const dueDate = document.getElementById('newTask-dueDate')
-        const priority = Array.from(document.getElementsByName('priority'))
-        const taskPriority = DisplayTask.getPriority(priority)
-
-        try {
-            DisplayTask.checkTaskTitle(projectTitle, taskTitle.value)
-        } catch (errorMessage) {
-            document.getElementById('title-error').textContent = errorMessage
-            throw Error('Failed data check')
-        }
-    }
-
-    static checkTaskTitle(projectName, title) {
-        const maxNameLength = 750
-
-        if (title.length < 1) {
-            throw Error('Project title too short')
-        } else if (title.length > maxNameLength) {
-            throw Error('Task name exceeded 750 characters')
-        } else if (typeof Storage.getTask(projectName, title) === 'object') {
-            throw Error('Please enter a unique task name')
-        }
-    } */
 }

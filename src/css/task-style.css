@@ -68,140 +68,87 @@
 }
 
 
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 150px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  
-  /* Modal Content */
-  .modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    padding-bottom: 30px;
-    border: 1px solid #888;
-    border-radius: 3.5px;
-    width: 50%;
+#curr-project-title{
+    margin-top: 2rem;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    padding-bottom: 0.25rem;
+
+    cursor: default;
+
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.task-details, .task-title{
+    margin-left: 15px;
+}
+
+.task-details{
+    border: solid var(--task-header) 1px;
+    border-top: none;
+    border-radius: 0px 0px 3px 3px;
+
+    margin: 0;
+    padding: 0;
+    margin-right: 10%;
+
+    padding-left: 0.8rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+
+}
+
+.task-description, .task-priority{
+margin: 0.65em;
+}
+.task-description{
+    font-style: italic;
+}
+
+.due-date{
+    align-self: center;
+    justify-self: right;
+    padding-right: 1rem;
+    font-size: 0.85rem;
+}
+
+.task-header{
+    background-color: var(--task-header);
+    margin: 0;
+    padding: 0;
+    border-radius: 3px;
 
     display: grid;
-  }
-  
-  /* The Close Button */
-  .close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    justify-self: right;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
+    grid-template-columns: 68% 26% 3% 3%;
+    margin-right: 10%;
+
     cursor: pointer;
-  }
+}
 
-  #curr-project-title{
-      margin-top: 2rem;
-      margin-bottom: 20px;
-      font-size: 1.8rem;
-      padding-bottom: 0.25rem;
-
-      cursor: default;
-
-      -webkit-user-select: none; /* Safari */        
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* IE10+/Edge */
-      user-select: none; /* Standard */
-  }
-
-  .task-details, .task-title{
-      margin-left: 15px;
-  }
-
-  .task-details{
-      border: solid var(--task-header) 1px;
-      border-top: none;
-      border-radius: 0px 0px 3px 3px;
-
-      margin: 0;
-      padding: 0;
-      margin-right: 10%;
-
-      padding-left: 0.8rem;
-      padding-top: 0.4rem;
-      padding-bottom: 0.4rem;
-
-  }
-
-  .task-description, .task-priority{
-    margin: 0.65em;
- }
- .task-description{
-     font-style: italic;
- }
-
-  .due-date{
-      align-self: center;
-      justify-self: right;
-      padding-right: 1rem;
-      font-size: 0.85rem;
-  }
-
-  .task-header{
-      background-color: var(--task-header);
-      margin: 0;
-      padding: 0;
-      border-radius: 3px;
-
-      display: grid;
-      grid-template-columns: 68% 26% 3% 3%;
-      margin-right: 10%;
-
-      cursor: pointer;
-  }
-
-  .task-header{
+.task-header{
     grid-template-columns: 74% 26%;
-  }
+}
 
-  .task-header:hover{
+.task-header:hover{
     grid-template-columns: 66% 26% 4% 4%;
-  }
+}
 
-  .task-header:hover{
-      background-color: var(--task-header-hover);
-  }
+.task-header:hover{
+    background-color: var(--task-header-hover);
+}
 
-  .overdue{
-      color: red;
-  }
+.overdue{
+    color: red;
+}
 
-  #add-task-header{
-      text-align: center;
-  }
+#add-task-header{
+    text-align: center;
+}
 
-  .user-input{
-      margin: 1rem;
-      margin-top: 1.3rem;
-  }
-
-  #priority{
-      width: 85%;
-  }
-
-  .edit-task{
+.edit-task{
     display: none;
     align-self: center;
     justify-self: center;
@@ -219,65 +166,21 @@
     color: white;
 }
 
-  
-  #low, #medium, #high{
-      margin-left: 1.4rem;
-      margin-right: 0.5rem;
-  }
-
-  #newTask-dueDate, #newTask-description, #task-title, #add-task{
-      margin-left: 15px;
-      height: 2em;
-      padding-left: 0.4rem;
-      padding-right: 0.4rem;
-      width: 40%;
-  }
-
-  fieldset{
-      border: solid 1px black;
-      border-radius: 3px;
-      padding: 0.8rem;
-  }
-
-  #add-task{
-    width: 105px;
-    height: 40px;
-    
-    margin-top: 10px;
-
-    align-self: center;
-    justify-self: center;
-  }
-
-  #newTask-dueDate{
-      width: 8.11rem;
-  }
-
-  .high{
+.high{
     border-left: red solid 4px;
-  }
+}
 
-  .medium{
+.medium{
     border-left: yellow solid 4px;
-  }
+}
 
-  .low{
-      border-left: green solid 4px;
-  }
+.low{
+    border-left: green solid 4px;
+}
 
-  .task{
-      cursor: default;
-  }
-
-
- label{
-     font-size: 0.9em;
- }
-
- .form-error{
-     font-size: 0.7em;
-     color: red;
- }
+.task{
+    cursor: default;
+}
 
 
 

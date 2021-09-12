@@ -2,6 +2,7 @@
 import Task from '../task.js'
 import Storage from '../storageManager.js'
 import DisplayTask from './displayTask.js'
+import '../../css/taskform-style.css'
 
 export default class TaskForm {
     // eslint-disable-next-line class-methods-use-this
@@ -10,15 +11,31 @@ export default class TaskForm {
         const closeModal = document.querySelector('.close')
         const modal = document.querySelector('.modal')
         const addTask = document.getElementById('add-task')
+        const title = document.getElementById('task-title')
 
         openNewProjButton.addEventListener('click', TaskForm.openModal)
         closeModal.addEventListener('click', TaskForm.closeModal)
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 TaskForm.closeModal()
+                // clear error messages!!
             }
         })
-        addTask.addEventListener('click', TaskForm.createTask)
+
+        title.addEventListener('input', () => {
+            TaskForm.errorCheck()
+        })
+
+        addTask.addEventListener('click', (e) => {
+            e.preventDefault()
+
+            try {
+                TaskForm.errorCheck()
+            } catch {
+                return
+            }
+            TaskForm.submitForm()
+        })
     }
 
     static openModal() {
@@ -33,53 +50,50 @@ export default class TaskForm {
         return document.querySelector('.active').firstChild.textContent
     }
 
-    static createTask() {
-        const taskTitle = document.getElementById('task-title')
-        const description = document.getElementById('newTask-description')
-        const dueDate = document.getElementById('newTask-dueDate')
-        const priority = Array.from(document.getElementsByName('priority'))
-        const taskPriority = TaskForm.getPriority(priority)
+    static getInputs() {
+        const priorityArr = Array.from(document.getElementsByName('priority'))
+        return {
+            title: document.getElementById('task-title'),
+            description: document.getElementById('newTask-description'),
+            date: document.getElementById('newTask-dueDate'),
+            priority: TaskForm.getPriority(priorityArr),
+        }
+    }
 
+    static submitForm() {
+        const inputs = TaskForm.getInputs()
         const projectTitle = TaskForm.getActiveProjectTitle()
 
-        try {
-            TaskForm.checkData()
-        } catch {
-            return
-        }
-
         const newTask = new Task(
-            taskTitle.value,
-            description.value,
-            dueDate.value,
-            taskPriority,
+            inputs.title.value.trim(),
+            inputs.description.value.trim(),
+            inputs.date.value.trim(),
+            inputs.priority,
             'notes'
         )
 
         Storage.storeTask(projectTitle, newTask)
         const taskDisplay = new DisplayTask()
         taskDisplay.displayTask(newTask)
-        // taskDisplay.initializeTaskButtons()
 
-        taskTitle.value = ''
-        description.value = ''
+        inputs.title.value = ''
+        inputs.description.value = ''
         const today = new Date()
-        dueDate.value = today.getDate()
-        TaskForm.clearPriority(priority)
-
-        document.getElementById('title-error').value = ''
+        inputs.date.value = today.getDate()
+        TaskForm.clearPriority(inputs.priority)
     }
 
     static clearPriority(priorities) {
-        for (let i = 0; i < priorities.length; i++) {
+        for (let i = 0; i < priorities.length; i += 1) {
             if (priorities[i].checked) {
+                // eslint-disable-next-line no-param-reassign
                 priorities[i].checked = false
             }
         }
     }
 
     static getPriority(priorities) {
-        for (let i = 0; i < priorities.length; i++) {
+        for (let i = 0; i < priorities.length; i += 1) {
             if (priorities[i].checked) {
                 return priorities[i].value
             }
@@ -88,16 +102,13 @@ export default class TaskForm {
         return 'none'
     }
 
-    static checkData() {
+    static errorCheck() {
         const projectTitle = TaskForm.getActiveProjectTitle()
-        const taskTitle = document.getElementById('task-title')
-        const description = document.getElementById('newTask-description')
-        const dueDate = document.getElementById('newTask-dueDate')
-        const priority = Array.from(document.getElementsByName('priority'))
-        const taskPriority = TaskForm.getPriority(priority)
+        const inputs = TaskForm.getInputs()
 
         try {
-            TaskForm.checkTaskTitle(projectTitle, taskTitle.value)
+            TaskForm.checkTaskTitle(projectTitle, inputs.title.value)
+            document.getElementById('title-error').textContent = ''
         } catch (errorMessage) {
             document.getElementById('title-error').textContent = errorMessage
             throw Error('Failed data check')

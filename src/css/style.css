@@ -73,7 +73,6 @@ body{
 .active, .project:hover{
     background: linear-gradient(90deg, rgba(131,58,180, 0.6) 0%, rgba(253,29,29, 0.6) 50%, rgba(252,176,69, 0.6) 100%);
     color: white;
-    width: 100%;
 }
 
 .project:hover .delete-project{
@@ -100,12 +99,13 @@ button{
     grid-gap: 0.5em;
 
     cursor: pointer;
-
+    width: 95%;
 }
 
 #project-area{
     background-color: var(--pinky);
     padding: 1rem;
+    padding-right: 0.6em;
 }
 
 .project-title{
