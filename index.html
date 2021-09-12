@@ -34,43 +34,46 @@
         <h2 id="curr-project-title">My Tasks</h2>
         <div id="task-list"></div>
         <button id="open-task-form" class="add">&plus; Add Task</button>
+
         <div id="task-modal" class="modal hidden">
           <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="add-task-header">Add a task</h2>
 
-            <!-- <form novalidate> -->
-              <p class="user-input">
-                <label for="task-title">
-                  <span>Title</span>
-                  <input id="task-title" type="text" required minlength="1" maxlength="500" data-missing-error="Please enter a task title">
-                </label> 
+            
+            
+
+            <form novalidate>
+              <div class="user-input">
+                <label for="task-title">Title</label> 
+                <input id="task-title" type="text" required minlength="1" maxlength="500" data-missing-error="Please enter a task title">
+                
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
                 <br><span id="title-error" class="form-error" aria-live="polite"></span>
-              </p>
+              </div>
               
-              <p class="user-input">
-                <label for="newTask-description">
-                  <span>Description</span>
-                  <textarea id="newTask-description" maxlength="750" cols="50" rows="4"></textarea>
-                </label>
-              </p>
+              <div class="user-input">
+                <label for="newTask-description">Description</label>
+                <textarea id="newTask-description" maxlength="750" cols="50" rows="4"></textarea>
+              </div>
 
-              <p class="user-input">
-                <label for="newTask-dueDate">
-                  <span>Due Date</span>
-                  <input id="newTask-dueDate" type="date">
-                </label>
-              </p>
+              <div class="user-input">
+                <label for="newTask-dueDate">Due Date</label>
+                <input id="newTask-dueDate" type="date">
 
-              <fieldset id="priority" class="user-input">
-                <span>Priority</span>
+              </div>
+
+              <div id="priority" class="user-input">
+                <span>Priority</span><br>
                 <input type="radio" name="priority" id="low" value="low"><label for="low">Low</label>
                 <input type="radio" name="priority" id="medium" value="medium"><label for="medium">Medium</label>
                 <input type="radio" name="priority" id="high" value="high"><label for="high">High</label>
-              </fieldset>
+              </div>
 
               <button id="add-task">Create Task</button>
-          <!-- </form> -->
+          </form>
           </div>
         </div>
       </div>
