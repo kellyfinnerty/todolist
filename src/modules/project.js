@@ -31,7 +31,7 @@ export default class Project {
 
     removeTask(taskTitle) {
         const index = this._taskList.findIndex(
-            (task) => task.getTitle === taskTitle
+            (task) => task.getTitle() === taskTitle
         )
         this._taskList.splice(index, 1)
     }

@@ -140,7 +140,7 @@ label{
     visibility: hidden;
 }
 
-.form-control.error small {
+.user-input.error small {
     visibility: visible;
 }
 

@@ -166,7 +166,8 @@ export default class DisplayTask {
 
     static deleteTask(deleteBtn) {
         const projectTitle = DisplayTask.getActiveProjectTitle()
-        const taskName = deleteBtn.previousElementSibling.textContent
+        const taskHeader = deleteBtn.parentElement
+        const taskName = taskHeader.querySelector('h3').textContent
 
         Storage.removeTask(projectTitle, taskName)
 

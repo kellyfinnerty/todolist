@@ -18,27 +18,28 @@ export default class TaskForm {
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 TaskForm.closeModal()
-                // clear error messages!!
+                TaskForm.resetForm()
             }
         })
 
         title.addEventListener('input', () => {
             try {
                 TaskForm.errorCheck()
-            } catch {
+            } catch (error) {
+                console.log(error)
                 return
             }
         })
 
         addTask.addEventListener('click', (e) => {
-            e.preventDefault()
-
             try {
+                e.preventDefault()
                 TaskForm.errorCheck()
+                TaskForm.submitForm()
+                TaskForm.resetForm()
             } catch {
                 return
             }
-            TaskForm.submitForm()
         })
     }
 
@@ -79,21 +80,14 @@ export default class TaskForm {
         Storage.storeTask(projectTitle, newTask)
         const taskDisplay = new DisplayTask()
         taskDisplay.displayTask(newTask)
-
-        inputs.title.value = ''
-        inputs.description.value = ''
-        const today = new Date()
-        inputs.date.value = today.getDate()
-        TaskForm.clearPriority(inputs.priority)
     }
 
-    static clearPriority(priorities) {
-        for (let i = 0; i < priorities.length; i += 1) {
-            if (priorities[i].checked) {
-                // eslint-disable-next-line no-param-reassign
-                priorities[i].checked = false
-            }
-        }
+    static resetForm() {
+        document.querySelector('form').reset()
+
+        Array.from(document.querySelectorAll('.user-input')).forEach((div) => {
+            div.classList.remove('success', 'error')
+        })
     }
 
     static getPriority(priorities) {
@@ -109,12 +103,28 @@ export default class TaskForm {
     static errorCheck() {
         const projectTitle = TaskForm.getActiveProjectTitle()
         const inputs = TaskForm.getInputs()
+        const titleDiv = inputs.title.parentNode
 
         try {
-            TaskForm.checkTaskTitle(projectTitle, inputs.title.value)
-            document.querySelector('small').textContent = ''
+            // TaskForm.checkTaskTitle(projectTitle, inputs.title.value)
+            const taskName = inputs.title.value
+
+            if (taskName.length < 1) {
+                throw Error('Task name too short')
+            } else if (taskName.length > 750) {
+                throw Error('Task name exceeded 750 characters')
+            } else if (
+                typeof Storage.getTask(projectTitle, taskName) === 'object'
+            ) {
+                throw Error('Please enter a unique task name')
+            }
+            titleDiv.classList.add('success')
+            titleDiv.classList.remove('error')
+            titleDiv.querySelector('small').textContent = ''
         } catch (errorMessage) {
-            document.querySelector('small').textContent = errorMessage
+            titleDiv.classList.add('error')
+            titleDiv.classList.remove('success')
+            titleDiv.querySelector('small').textContent = errorMessage
             throw Error('Failed data check')
         }
     }

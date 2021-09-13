@@ -217,4 +217,13 @@ button{
     margin-top: 0.2em;
     padding: 0.2em;
     visibility: hidden;
+    color: red;
+}
+
+#project-form.error small{
+    visibility: visible;
+}
+
+#project-form.success input{
+    border-color: #2ecc71;
 }

@@ -56,7 +56,10 @@ export default class UI {
         const addNewProjectButton = document.querySelector('#add-project')
 
         openNewProjButton.addEventListener('click', this.toggleProjectForm)
-        cancelNewProjectButton.addEventListener('click', this.toggleProjectForm)
+        cancelNewProjectButton.addEventListener('click', () => {
+            UI.toggleProjectForm()
+            UI.resetProjectForm()
+        })
         addNewProjectButton.addEventListener('click', () => {
             UI.createProject()
         })
@@ -65,6 +68,15 @@ export default class UI {
     static toggleProjectForm() {
         document.querySelector('#open-project-form').classList.toggle('hidden')
         document.querySelector('#project-form').classList.toggle('hidden')
+    }
+
+    static resetProjectForm() {
+        const titleInput = document.getElementById('project-title')
+        const small = titleInput.nextElementSibling
+
+        titleInput.value = ''
+        titleInput.classList.remove('error', 'success')
+        small.textContent = ''
     }
 
     static initProjectButtons() {
@@ -144,7 +156,8 @@ export default class UI {
 
     // event listener method
     static createProject() {
-        const title = document.querySelector('#project-title').value
+        const form = document.querySelector('#project-title').parentNode
+        const title = document.querySelector('#project-title').value.trim()
 
         // do nothing if title is empty string
         if (title < 1) return
@@ -152,7 +165,9 @@ export default class UI {
         try {
             this.checkProjectUserInput(title)
         } catch (errorMessage) {
-            alert(errorMessage)
+            form.classList.add('error')
+            const error = form.querySelector('small')
+            error.textContent = errorMessage
             return
         }
 
@@ -163,6 +178,7 @@ export default class UI {
         document.querySelector('#project-title').value = ''
 
         this.initProjectButtons()
+        UI.resetProjectForm()
     }
 
     static today() {
