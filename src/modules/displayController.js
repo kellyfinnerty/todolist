@@ -113,6 +113,7 @@ export default class UI {
         if (nextProj === null && prevProj === null) {
             document.getElementById('task-area').classList.toggle('hidden')
             document.getElementById('welcome').classList.toggle('hidden')
+            return
         } else if (nextProj === null) {
             selProj = prevProj
         } else {

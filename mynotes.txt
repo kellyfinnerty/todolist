@@ -1,0 +1,16 @@
+
+Use command npx webpack --watch to run.
+
+Aspects to work on for this project
+ - home page 
+ - fade the scroll
+ - 'today' and 'week' tab, had a difficult time comparing dates
+ - use the browser's time zone for due date comparison
+ - show date due when over a week away, otherwise show number of days
+ - make task editable either in place or using the form 
+ - project input form, inline checking of validity
+ - success alert when creating a task or project
+ - sort tasks by date, priority, etc.
+ - remove/add date right when you check it off/uncheck
+ - check if project is already open before allowing click
+ - MOBILE version

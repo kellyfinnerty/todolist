@@ -52,7 +52,7 @@ export default class BoardCoordinator {
         return proj.getTaskList()
     }
 
-    #getProjectIndex(title) {
+    getProjectIndex(title) {
         return this._projects
             .map((project) => project.getTitle())
             .indexOf(title)
@@ -62,7 +62,7 @@ export default class BoardCoordinator {
         const proj = this.getProject(projectTitle)
         proj.updateTask(taskTitle, newTask)
 
-        const projIndex = this.#getProjectIndex(projectTitle)
+        const projIndex = this.getProjectIndex(projectTitle)
         this._projects[projIndex] = proj
     }
 }
