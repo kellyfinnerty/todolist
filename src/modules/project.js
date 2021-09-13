@@ -35,4 +35,13 @@ export default class Project {
         )
         this._taskList.splice(index, 1)
     }
+
+    #getTaskIndex(taskTitle) {
+        return this._taskList.map((task) => task.getTitle()).indexOf(taskTitle)
+    }
+
+    updateTask(taskTitle, newTask) {
+        const taskIndex = this.#getTaskIndex(taskTitle)
+        this._taskList[taskIndex].updateTask(newTask)
+    }
 }

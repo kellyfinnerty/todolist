@@ -88,6 +88,12 @@ const storage = (function () {
         return _getBoard().getTasks(projectName)
     }
 
+    function updateTask(projectName, taskName, newTask) {
+        const board = _getBoard()
+        board.updateTask(projectName, taskName, newTask)
+        _storeBoard(board)
+    }
+
     return {
         storeProject,
         getStoredProject,
@@ -98,6 +104,7 @@ const storage = (function () {
         getTask,
         getAllStoredProjects,
         getTasks,
+        updateTask,
     }
 })()
 

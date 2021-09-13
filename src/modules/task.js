@@ -1,17 +1,27 @@
 /* eslint-disable no-underscore-dangle */
 
 export default class Task {
-    constructor(title, desc, dueDate, priority, notes) {
+    constructor(title, desc, dueDate, priority, notes, completed) {
         this._title = title
         this._desc = desc
         this._dueDate = dueDate
         this._priority = priority
         this._notes = notes
+        this._completed = completed
 
         this._maxTitle = 500
         this._maxDesc = 1000
         this._minTitle = 1
         this._minDesc = 1
+    }
+
+    updateTask(newTask) {
+        this._title = newTask.getTitle()
+        this._desc = newTask.getDescription()
+        this._dueDate = newTask.getDueDate()
+        this._priority = newTask.getPriority()
+        this._notes = newTask.getNotes()
+        this._completed = newTask.getCompleted()
     }
 
     getTitle() {
@@ -58,11 +68,19 @@ export default class Task {
         this._priority = value
     }
 
-    get notes() {
+    getCompleted() {
+        return this._completed
+    }
+
+    setCompleted(value) {
+        this._completed = value
+    }
+
+    getNotes() {
         return this._notes
     }
 
-    set notes(value) {
+    setNotes(value) {
         // check
         this._notes = value
     }

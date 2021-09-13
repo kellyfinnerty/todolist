@@ -82,7 +82,7 @@
 }
 
 .task-details, .task-title{
-    margin-left: 15px;
+    margin-left: 4px;
 }
 
 .task-details{
@@ -121,18 +121,15 @@ margin: 0.65em;
     border-radius: 3px;
 
     display: grid;
-    grid-template-columns: 68% 26% 3% 3%;
+    grid-template-columns: 4% 70% 26%;
     margin-right: 10%;
 
     cursor: pointer;
-}
-
-.task-header{
-    grid-template-columns: 74% 26%;
+    border-left: solid transparent 4px;
 }
 
 .task-header:hover{
-    grid-template-columns: 66% 26% 4% 4%;
+    grid-template-columns: 4% 62% 26% 4% 4%;
 }
 
 .task-header:hover{
@@ -182,4 +179,15 @@ margin: 0.65em;
 }
 
 
+.task-header .far{
+    justify-self: center;
+    align-self: center;
+}
 
+.hidden{
+    display: none;
+}
+
+.fa-check-circle.hidden .fa-circle{
+    color: red;
+}

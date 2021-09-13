@@ -43,6 +43,12 @@ export default class DisplayTask {
         const taskHeaderDiv = document.createElement('div')
         taskHeaderDiv.classList.add('task-header')
 
+        const checkCircle = document.createElement('i')
+        checkCircle.classList.add('far', 'fa-check-circle', 'hidden')
+
+        const openCircle = document.createElement('i')
+        openCircle.classList.add('far', 'fa-circle')
+
         const taskTitle = document.createElement('h3')
         taskTitle.textContent = task.getTitle()
         taskTitle.classList.add('task-title')
@@ -61,10 +67,14 @@ export default class DisplayTask {
 
         area.appendChild(taskDiv)
         taskDiv.appendChild(taskHeaderDiv)
+        taskHeaderDiv.appendChild(checkCircle)
+        taskHeaderDiv.appendChild(openCircle)
         taskHeaderDiv.appendChild(taskTitle)
         taskHeaderDiv.appendChild(dueDate)
         taskHeaderDiv.appendChild(edit)
         taskHeaderDiv.appendChild(deleteTask)
+
+        DisplayTask.initCheckBox(task.getCompleted(), checkCircle, openCircle)
 
         // EVENT LISTENERS
         deleteTask.addEventListener('click', () =>
@@ -73,6 +83,42 @@ export default class DisplayTask {
         taskHeaderDiv.addEventListener('click', (e) => {
             this.expandTask(taskHeaderDiv, e.target)
         })
+
+        checkCircle.addEventListener('click', () => {
+            DisplayTask.uncheckCircle(task, openCircle, checkCircle)
+        })
+
+        openCircle.addEventListener('click', () => {
+            DisplayTask.checkCircle(task, openCircle, checkCircle)
+        })
+    }
+
+    static initCheckBox(completed, check, unchecked) {
+        if (completed) {
+            check.classList.remove('hidden')
+            unchecked.classList.add('hidden')
+        } else {
+            unchecked.classList.remove('hidden')
+            check.classList.add('hidden')
+        }
+    }
+
+    static uncheckCircle(task, unchecked, checked) {
+        const projTitle = DisplayTask.getActiveProjectTitle()
+        task.setCompleted(false)
+        Storage.updateTask(projTitle, task.getTitle(), task)
+
+        unchecked.classList.remove('hidden')
+        checked.classList.add('hidden')
+    }
+
+    static checkCircle(task, unchecked, checked) {
+        const projTitle = DisplayTask.getActiveProjectTitle()
+        task.setCompleted(true)
+        Storage.updateTask(projTitle, task.getTitle(), task)
+
+        unchecked.classList.add('hidden')
+        checked.classList.remove('hidden')
     }
 
     static getTimeZone() {
@@ -122,6 +168,7 @@ export default class DisplayTask {
     expandTask(task, taskHeader) {
         if (taskHeader.classList.contains('edit-task')) return
         if (taskHeader.classList.contains('delete-task')) return
+        if (taskHeader.classList.contains('far')) return
         if (!task.parentNode.classList.contains('task-expanded')) {
             DisplayTask.openTask(task.parentNode)
         } else {
@@ -135,7 +182,7 @@ export default class DisplayTask {
 
     static openTask(task) {
         const projTitle = DisplayTask.getActiveProjectTitle()
-        const taskName = task.firstChild.firstChild.textContent
+        const taskName = task.querySelector('h3').textContent
         const storedTask = Storage.getTask(projTitle, taskName)
 
         task.classList.add('task-expanded')

@@ -74,7 +74,8 @@ export default class TaskForm {
             inputs.description.value.trim(),
             inputs.date.value.trim(),
             inputs.priority,
-            'notes'
+            'notes',
+            false
         )
 
         Storage.storeTask(projectTitle, newTask)
