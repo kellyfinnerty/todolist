@@ -227,3 +227,22 @@ button{
 #project-form.success input{
     border-color: #2ecc71;
 }
+
+#welcome{
+    display: grid;
+    grid-template-rows: 10% 30%;
+    padding: 3rem;
+    padding-top: 10rem;
+}
+
+#welcome h2{
+    font-size: 2rem;
+    align-self: center;
+    justify-self: center;
+}
+
+ #welcome p{
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 1.25rem;
+ }

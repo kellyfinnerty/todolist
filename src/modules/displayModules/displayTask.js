@@ -53,7 +53,10 @@ export default class DisplayTask {
         taskTitle.textContent = task.getTitle()
         taskTitle.classList.add('task-title')
 
-        const dueDate = DisplayTask.displayDate(task.getDueDate())
+        const dueDate = DisplayTask.displayDate(
+            task.getCompleted(),
+            task.getDueDate()
+        )
 
         const edit = document.createElement('button')
         edit.innerHTML = `<i class="fas fa-edit"></i>`
@@ -85,48 +88,45 @@ export default class DisplayTask {
         })
 
         checkCircle.addEventListener('click', () => {
-            DisplayTask.uncheckCircle(task, openCircle, checkCircle)
+            DisplayTask.updateCheckBox(false, task, openCircle, checkCircle)
         })
 
         openCircle.addEventListener('click', () => {
-            DisplayTask.checkCircle(task, openCircle, checkCircle)
+            DisplayTask.updateCheckBox(true, task, openCircle, checkCircle)
         })
     }
 
     static initCheckBox(completed, check, unchecked) {
+        const taskDiv = unchecked.parentElement
+
         if (completed) {
             check.classList.remove('hidden')
             unchecked.classList.add('hidden')
+            taskDiv.querySelector('h3').classList.add('crossed-out')
         } else {
             unchecked.classList.remove('hidden')
             check.classList.add('hidden')
+            taskDiv.querySelector('h3').classList.remove('crossed-out')
         }
     }
 
-    static uncheckCircle(task, unchecked, checked) {
+    static updateCheckBox(checkedBool, task, unchecked, checked) {
         const projTitle = DisplayTask.getActiveProjectTitle()
-        task.setCompleted(false)
+        task.setCompleted(checkedBool)
         Storage.updateTask(projTitle, task.getTitle(), task)
 
-        unchecked.classList.remove('hidden')
-        checked.classList.add('hidden')
-    }
-
-    static checkCircle(task, unchecked, checked) {
-        const projTitle = DisplayTask.getActiveProjectTitle()
-        task.setCompleted(true)
-        Storage.updateTask(projTitle, task.getTitle(), task)
-
-        unchecked.classList.add('hidden')
-        checked.classList.remove('hidden')
+        this.initCheckBox(task.getCompleted(), checked, unchecked)
     }
 
     static getTimeZone() {
         return Intl.DateTimeFormat().resolvedOptions().timeZone
     }
 
-    static displayDate(dueDate) {
+    static displayDate(completed, dueDate) {
         const dueDatePar = document.createElement('p')
+
+        if (completed) return dueDatePar
+
         let formattedDate = new Date(dueDate)
         formattedDate.setHours(0, 0, 0, 0)
 

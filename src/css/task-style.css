@@ -191,3 +191,7 @@ margin: 0.65em;
 .fa-check-circle.hidden .fa-circle{
     color: red;
 }
+
+.crossed-out{
+    text-decoration: line-through;
+}
