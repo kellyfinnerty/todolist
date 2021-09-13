@@ -235,6 +235,10 @@ button{
     padding-top: 10rem;
 }
 
+#welcome.hidden{
+    display: none;
+}
+
 #welcome h2{
     font-size: 2rem;
     align-self: center;
